@@ -1,4 +1,4 @@
-/* Physics: Cat vs Dog - Projectile Battle Styles */
+/* Physics: Cat vs Dog - Projectile Battle Styles - Dual Side Questions & 2P Fair Turn Engine */
 :root {
   --bg-game: #080b18;
   --panel-bg: rgba(15, 23, 42, 0.9);
@@ -44,11 +44,11 @@ body {
 .game-hud {
   background: rgba(10, 15, 30, 0.95);
   border-bottom: 1px solid var(--panel-border);
-  padding: 0.4rem 1rem;
+  padding: 0.35rem 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: 0.6rem;
   z-index: 20;
   flex-wrap: wrap;
 }
@@ -63,11 +63,11 @@ body {
   background: rgba(0, 0, 0, 0.6);
   border: 1px solid var(--accent-cyan);
   color: var(--accent-cyan);
-  padding: 0.35rem 0.65rem;
+  padding: 0.3rem 0.6rem;
   border-radius: 6px;
   font-family: inherit;
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   cursor: pointer;
 }
 
@@ -80,7 +80,7 @@ body {
 
 .hud-value {
   font-family: var(--font-digital);
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 700;
 }
 
@@ -108,7 +108,7 @@ body {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--panel-border);
   color: var(--text-primary);
-  padding: 0.35rem 0.65rem;
+  padding: 0.3rem 0.6rem;
   border-radius: 6px;
   cursor: pointer;
   font-family: inherit;
@@ -153,7 +153,7 @@ body {
   top: 10px;
   left: 0;
   width: 100%;
-  padding: 0 1.5rem;
+  padding: 0 1.25rem;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -162,11 +162,11 @@ body {
 }
 
 .fighter-status {
-  width: 280px;
+  width: 270px;
   background: rgba(15, 23, 42, 0.85);
   border: 1.5px solid var(--panel-border);
   border-radius: 12px;
-  padding: 0.6rem 0.8rem;
+  padding: 0.5rem 0.75rem;
   backdrop-filter: blur(8px);
   pointer-events: auto;
 }
@@ -175,15 +175,15 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.3rem;
 }
 
 .avatar {
-  font-size: 1.8rem;
+  font-size: 1.7rem;
 }
 
 .name-box strong {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   display: block;
 }
 
@@ -192,14 +192,14 @@ body {
 }
 
 .streak-badge {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--accent-yellow);
   font-weight: 700;
 }
 
 .hp-bar-container {
   position: relative;
-  height: 16px;
+  height: 15px;
   background: rgba(0, 0, 0, 0.6);
   border-radius: 8px;
   overflow: hidden;
@@ -217,7 +217,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-family: var(--font-digital);
   font-weight: bold;
   color: #fff;
@@ -225,14 +225,14 @@ body {
 }
 
 .vs-badge {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 900;
   color: var(--accent-yellow);
   background: rgba(0, 0, 0, 0.7);
   border: 2px solid var(--accent-yellow);
   border-radius: 50%;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -243,7 +243,7 @@ body {
 .powerup-bar {
   display: flex;
   gap: 0.3rem;
-  margin-top: 0.4rem;
+  margin-top: 0.35rem;
 }
 
 .powerup-btn {
@@ -251,9 +251,9 @@ body {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--text-muted);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  padding: 0.25rem 0;
+  padding: 0.2rem 0;
   border-radius: 4px;
   cursor: not-allowed;
   transition: all 0.2s ease;
@@ -276,13 +276,13 @@ body {
 /* Hotkey Banner */
 .hotkey-banner {
   position: absolute;
-  bottom: 15px;
+  bottom: 12px;
   background: rgba(0, 242, 254, 0.2);
   border: 1px solid var(--accent-cyan);
   color: var(--accent-cyan);
-  padding: 0.4rem 1.25rem;
+  padding: 0.35rem 1.1rem;
   border-radius: 30px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 700;
   backdrop-filter: blur(8px);
 }
@@ -295,58 +295,94 @@ body {
 .game-controls {
   background: rgba(10, 14, 26, 0.95);
   border-top: 1px solid var(--panel-border);
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   z-index: 20;
 }
 
-.question-box {
-  background: rgba(15, 23, 42, 0.9);
-  border: 1px solid var(--accent-cyan);
-  border-radius: 10px;
-  padding: 0.6rem 1rem;
+/* Dual Side Question Area */
+.question-area {
+  display: flex;
+  gap: 0.75rem;
   width: 100%;
-  max-width: 800px;
-  text-align: center;
+  max-width: 960px;
 }
 
-.question-badge {
-  font-size: 0.75rem;
+.question-card {
+  flex: 1;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1.5px solid var(--panel-border);
+  border-radius: 10px;
+  padding: 0.5rem 0.8rem;
+  transition: all 0.25s ease;
+}
+
+.question-card.active-answering {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+  background: rgba(0, 242, 254, 0.08);
+}
+
+.question-card.cooldown {
+  opacity: 0.5;
+}
+
+.question-card.hidden {
+  display: none;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
   font-weight: 800;
-  color: var(--accent-yellow);
-  text-transform: uppercase;
-  margin-bottom: 0.2rem;
+  color: var(--accent-cyan);
+  margin-bottom: 0.25rem;
 }
 
-.spm-question {
-  font-size: 0.95rem;
+.dog-card .card-header {
+  color: var(--accent-magenta);
+}
+
+.hotkey-tag {
+  background: rgba(255, 234, 0, 0.2);
+  border: 1px solid var(--accent-yellow);
+  color: var(--accent-yellow);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.68rem;
+}
+
+.spm-question-text {
+  font-size: 0.85rem;
   font-weight: 600;
   color: var(--text-primary);
-  line-height: 1.35;
+  line-height: 1.3;
 }
 
 .input-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
   width: 100%;
 }
 
 .input-container {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
   width: 100%;
-  max-width: 440px;
+  max-width: 420px;
 }
 
 .input-prefix {
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--text-muted);
 }
 
@@ -355,12 +391,12 @@ body {
   background: #000;
   border: 2px solid var(--accent-cyan);
   border-radius: 8px;
-  padding: 0.35rem 0.8rem;
+  padding: 0.3rem 0.75rem;
   font-family: var(--font-digital);
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   color: var(--accent-cyan);
   text-align: right;
-  min-height: 42px;
+  min-height: 38px;
   box-shadow: inset 0 0 10px rgba(0, 242, 254, 0.2);
 }
 
@@ -372,11 +408,11 @@ body {
   background: linear-gradient(135deg, #00e676 0%, #00b0ff 100%);
   color: #000;
   border: none;
-  padding: 0.5rem 1.1rem;
+  padding: 0.45rem 1rem;
   border-radius: 8px;
   font-family: inherit;
   font-weight: 800;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   cursor: pointer;
   box-shadow: 0 0 12px rgba(0, 230, 118, 0.4);
   transition: transform 0.15s ease;
@@ -390,9 +426,9 @@ body {
 .numpad {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.35rem;
+  gap: 0.3rem;
   width: 100%;
-  max-width: 300px;
+  max-width: 290px;
 }
 
 .num-btn {
@@ -400,9 +436,9 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.15);
   color: #fff;
   font-family: var(--font-digital);
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  padding: 0.4rem 0;
+  padding: 0.35rem 0;
   border-radius: 6px;
   cursor: pointer;
   transition: background 0.15s ease, transform 0.1s ease;

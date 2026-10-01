@@ -14,21 +14,31 @@
     <!-- Top HUD Header -->
     <header class="game-hud">
       <div class="hud-item mode-selector">
-        <label for="mode-select" data-i18n="modeLabel">Game Mode:</label>
+        <label for="mode-select" data-i18n="modeLabel">Mode:</label>
         <select id="mode-select" class="hud-select">
           <option value="single" data-i18n="modeSingle" selected>1 Player vs Computer AI</option>
-          <option value="pvp" data-i18n="modePvp">2 Player Local Battle (Q vs P)</option>
+          <option value="pvp" data-i18n="modePvp">2 Player Battle (Q vs P)</option>
+        </select>
+      </div>
+
+      <div class="hud-item diff-selector" id="diff-selector-container">
+        <label for="difficulty-select" data-i18n="diffLabel">Timer:</label>
+        <select id="difficulty-select" class="hud-select">
+          <option value="infinite" data-i18n="diffPractice" selected>Unlimited Time (Practice)</option>
+          <option value="180" data-i18n="diffEasy">Easy (3 Min)</option>
+          <option value="120" data-i18n="diffMedium">Medium (2 Min)</option>
+          <option value="60" data-i18n="diffHard">Hard (1 Min)</option>
         </select>
       </div>
 
       <div class="hud-item turn-display">
-        <span class="hud-label" data-i18n="currentTurn">TURN:</span>
-        <span id="turn-indicator" class="hud-value cat-turn">🐱 CAT'S TURN</span>
+        <span class="hud-label" data-i18n="currentTurn">STATUS:</span>
+        <span id="turn-indicator" class="hud-value cat-turn">🐱 READY</span>
       </div>
 
       <div class="hud-item timer-box">
         <span class="hud-label" data-i18n="timeLabel">TIME:</span>
-        <span id="shot-timer" class="hud-value timer-glow">30s</span>
+        <span id="shot-timer" class="hud-value timer-glow">∞</span>
       </div>
 
       <div class="hud-actions">
@@ -60,9 +70,9 @@
           </div>
           <!-- Powerup Inventory -->
           <div class="powerup-bar" id="cat-powerups">
-            <button class="powerup-btn" data-type="heal" title="Heal +30 HP (Requires 3 Streak)" disabled>🩹 +30 HP</button>
-            <button class="powerup-btn" data-type="double" title="2x Double Damage (Requires 3 Streak)" disabled>💥 2x Dmg</button>
-            <button class="powerup-btn" data-type="freeze" title="Freeze Opponent (Requires 3 Streak)" disabled>❄️ Freeze</button>
+            <button class="powerup-btn" data-type="heal" data-fighter="cat" title="Heal +30 HP (Requires 3 Streak)" disabled>🩹 +30 HP</button>
+            <button class="powerup-btn" data-type="double" data-fighter="cat" title="2x Double Damage (Requires 3 Streak)" disabled>💥 2x Dmg</button>
+            <button class="powerup-btn" data-type="freeze" data-fighter="cat" title="Freeze Opponent (Requires 3 Streak)" disabled>❄️ Freeze</button>
           </div>
         </div>
 
@@ -84,9 +94,9 @@
           </div>
           <!-- Powerup Inventory -->
           <div class="powerup-bar" id="dog-powerups">
-            <button class="powerup-btn" data-type="heal" title="Heal +30 HP (Requires 3 Streak)" disabled>🩹 +30 HP</button>
-            <button class="powerup-btn" data-type="double" title="2x Double Damage (Requires 3 Streak)" disabled>💥 2x Dmg</button>
-            <button class="powerup-btn" data-type="freeze" title="Freeze Opponent (Requires 3 Streak)" disabled>❄️ Freeze</button>
+            <button class="powerup-btn" data-type="heal" data-fighter="dog" title="Heal +30 HP (Requires 3 Streak)" disabled>🩹 +30 HP</button>
+            <button class="powerup-btn" data-type="double" data-fighter="dog" title="2x Double Damage (Requires 3 Streak)" disabled>💥 2x Dmg</button>
+            <button class="powerup-btn" data-type="freeze" data-fighter="dog" title="Freeze Opponent (Requires 3 Streak)" disabled>❄️ Freeze</button>
           </div>
         </div>
       </div>
@@ -96,26 +106,41 @@
 
       <!-- Hotkey Prompt Banner (2 Player Mode) -->
       <div id="hotkey-banner" class="hotkey-banner hidden">
-        <span id="hotkey-prompt-text">Press <strong>[ Q ]</strong> for Cat or <strong>[ P ]</strong> for Dog to answer!</span>
+        <span id="hotkey-prompt-text">🐱 Cat press <strong>[ Q ]</strong> | 🐶 Dog press <strong>[ P ]</strong> to answer!</span>
       </div>
     </main>
 
     <!-- Question & Controls Box -->
     <footer class="game-controls">
-      <!-- SPM Physics Question Display -->
-      <div class="question-box">
-        <div class="question-badge">
-          <span>📐 SPM Physics Question (g = 9.8 ms⁻²)</span>
+      <!-- SPM Physics Question Display Area (Single or Dual Side-by-Side) -->
+      <div class="question-area" id="question-area">
+        <!-- Cat Question Box (Left) -->
+        <div class="question-card cat-card" id="cat-q-card">
+          <div class="card-header">
+            <span>🐱 CAT'S SPM QUESTION</span>
+            <span class="hotkey-tag">[ Q ] TO ANSWER</span>
+          </div>
+          <p id="cat-question-text" class="spm-question-text">
+            Loading Cat's question...
+          </p>
         </div>
-        <p id="spm-question-text" class="spm-question">
-          Loading projectile motion calculation...
-        </p>
+
+        <!-- Dog Question Box (Right - 2 Player Mode) -->
+        <div class="question-card dog-card" id="dog-q-card">
+          <div class="card-header">
+            <span>🐶 DOG'S SPM QUESTION</span>
+            <span class="hotkey-tag">[ P ] TO ANSWER</span>
+          </div>
+          <p id="dog-question-text" class="spm-question-text">
+            Loading Dog's question...
+          </p>
+        </div>
       </div>
 
-      <!-- Input Display & Numpad -->
+      <!-- Input Display & Numpad Section -->
       <div class="input-section">
         <div class="input-container">
-          <span class="input-prefix" data-i18n="ansLabel">Answer =</span>
+          <span class="input-prefix" id="active-player-label">Cat Answer =</span>
           <div id="user-input-display" class="input-display placeholder">0</div>
           <button id="submit-btn" class="submit-action-btn" data-i18n="launchBtn">LAUNCH SHOT! 🚀</button>
         </div>
