@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trigonometry: Hole in the Wall</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="game-container">
+    <!-- Top HUD Header -->
+    <header class="game-hud">
+      <div class="hud-item level-selector-container">
+        <label for="difficulty-select" data-i18n="difficulty">Difficulty:</label>
+        <select id="difficulty-select" class="diff-select">
+          <option value="1" data-i18n="diffEasy">Level 1: Easy (Pythagoras)</option>
+          <option value="2" data-i18n="diffMedium" selected>Level 2: Medium (Trigo Ratios)</option>
+          <option value="3" data-i18n="diffHard">Level 3: Hard (Decimals)</option>
+        </select>
+      </div>
+
+      <div class="hud-item score-box">
+        <span class="hud-label" data-i18n="score">SCORE</span>
+        <span id="score-display" class="hud-value">0</span>
+      </div>
+
+      <div class="hud-item combo-box">
+        <span class="hud-label" data-i18n="streak">STREAK</span>
+        <span id="streak-display" class="hud-value streak-glow">🔥 0</span>
+      </div>
+
+      <div class="hud-actions">
+        <button id="toggle-formula-btn" class="hud-btn formula-btn" title="Formula Cheat Sheet">
+          <span class="btn-icon">📐</span> <span data-i18n="formulaBtn">Formulas</span>
+        </button>
+        <button id="audio-btn" class="hud-btn audio-btn" title="Toggle Mute">
+          <span id="audio-icon">🔊</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Timer / Wall Speed Progress Bar -->
+    <div class="timer-bar-container">
+      <div id="timer-bar" class="timer-bar"></div>
+    </div>
+
+    <!-- Main Game Viewport (3D Corridor & Animated Wall) -->
+    <main class="viewport">
+      <!-- 3D Perspective Stage -->
+      <div class="stage-3d">
+        <!-- Grid Floor & Ceiling -->
+        <div class="grid-ceiling"></div>
+        <div class="grid-floor"></div>
+
+        <!-- Animated Approaching Wall -->
+        <div id="approaching-wall" class="wall-3d">
+          <div class="wall-face">
+            <div class="wall-title" data-i18n="wallWarning">WALL APPROACHING!</div>
+            <!-- SVG Cutout Hole preview on the wall -->
+            <svg id="wall-hole-svg" class="wall-hole-svg" viewBox="0 0 200 150">
+              <!-- Rendered dynamically -->
+            </svg>
+          </div>
+        </div>
+
+        <!-- Player Station / Triangle Display -->
+        <div class="player-station">
+          <div class="question-header">
+            <span id="question-text" class="question-text">Find the missing value!</span>
+          </div>
+
+          <!-- Dynamic Interactive SVG Right Triangle -->
+          <div class="triangle-card">
+            <svg id="triangle-svg" viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg">
+              <!-- Triangle background & elements rendered via JavaScript -->
+            </svg>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bottom Controls & Input Area -->
+    <footer class="game-controls">
+      <!-- Input Display Box -->
+      <div class="input-container">
+        <span class="input-prefix" data-i18n="ansLabel">Answer =</span>
+        <div id="user-input-display" class="input-display placeholder">0</div>
+        <button id="submit-btn" class="submit-action-btn" data-i18n="submit">PASS! ✓</button>
+      </div>
+
+      <!-- On-Screen Touch Numpad -->
+      <div class="numpad">
+        <button class="num-btn" data-val="7">7</button>
+        <button class="num-btn" data-val="8">8</button>
+        <button class="num-btn" data-val="9">9</button>
+        
+        <button class="num-btn" data-val="4">4</button>
+        <button class="num-btn" data-val="5">5</button>
+        <button class="num-btn" data-val="6">6</button>
+        
+        <button class="num-btn" data-val="1">1</button>
+        <button class="num-btn" data-val="2">2</button>
+        <button class="num-btn" data-val="3">3</button>
+        
+        <button class="num-btn action-dot" data-val=".">.</button>
+        <button class="num-btn" data-val="0">0</button>
+        <button class="num-btn action-back" id="backspace-btn" data-val="back">⌫</button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Formula Drawer Sidebar -->
+  <aside id="formula-drawer" class="formula-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <h3 data-i18n="formulaTitle">📐 SOH CAH TOA Formulas</h3>
+      <button id="close-formula-btn" class="close-drawer-btn">✕</button>
+    </div>
+    <div class="drawer-content">
+      <div class="formula-card">
+        <h4>SOH</h4>
+        <p class="formula-eq">Sin(θ) = Opposite / Hypotenuse</p>
+        <p class="formula-eq-bm">Sin(θ) = Pertentangan / Hipotenus</p>
+      </div>
+
+      <div class="formula-card">
+        <h4>CAH</h4>
+        <p class="formula-eq">Cos(θ) = Adjacent / Hypotenuse</p>
+        <p class="formula-eq-bm">Kos(θ) = Bersebelahan / Hipotenus</p>
+      </div>
+
+      <div class="formula-card">
+        <h4>TOA</h4>
+        <p class="formula-eq">Tan(θ) = Opposite / Adjacent</p>
+        <p class="formula-eq-bm">Tan(θ) = Pertentangan / Bersebelahan</p>
+      </div>
+
+      <div class="formula-card pythagoras">
+        <h4>Pythagoras Theorem</h4>
+        <p class="formula-eq">a² + b² = c² (Hypotenuse c)</p>
+      </div>
+
+      <div class="formula-tips">
+        <p><strong>💡 Tip:</strong> Round angles and side decimals to 2 decimal places if required.</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Game Over / Victory Modal -->
+  <div id="game-over-modal" class="game-modal-overlay" aria-hidden="true">
+    <div class="game-modal-box">
+      <div id="modal-status-icon" class="status-icon">💥</div>
+      <h2 id="modal-status-title" data-i18n="crashTitle">WALL CRASHED!</h2>
+      <p id="modal-status-desc" data-i18n="crashDesc">You didn't match the hole parameters in time.</p>
+      
+      <div class="modal-stats">
+        <div class="stat-row">
+          <span data-i18n="finalScore">Final Score:</span>
+          <strong id="final-score-val">0</strong>
+        </div>
+        <div class="stat-row">
+          <span data-i18n="maxStreak">Max Streak:</span>
+          <strong id="max-streak-val">0</strong>
+        </div>
+        <div class="stat-row">
+          <span data-i18n="correctAnswers">Correct Wall Passes:</span>
+          <strong id="passes-val">0</strong>
+        </div>
+      </div>
+
+      <button id="restart-btn" class="restart-btn" data-i18n="playAgain">Play Again 🔄</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

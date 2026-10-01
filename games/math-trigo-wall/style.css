@@ -1,0 +1,552 @@
+/* Trigonometry: Hole in the Wall Game Styles */
+:root {
+  --bg-game: #070913;
+  --panel-bg: rgba(15, 22, 41, 0.85);
+  --panel-border: rgba(0, 242, 254, 0.25);
+  --accent-cyan: #00f2fe;
+  --accent-magenta: #ff0844;
+  --accent-green: #00e676;
+  --accent-yellow: #ffea00;
+  
+  --text-primary: #ffffff;
+  --text-muted: #94a3b8;
+  
+  --font-game: 'Outfit', system-ui, sans-serif;
+  --font-digital: 'Share Tech Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body {
+  background-color: var(--bg-game);
+  color: var(--text-primary);
+  font-family: var(--font-game);
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+
+/* Header HUD */
+.game-hud {
+  background: rgba(10, 15, 30, 0.9);
+  border-bottom: 1px solid var(--panel-border);
+  padding: 0.6rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  z-index: 20;
+}
+
+.hud-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.diff-select {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--panel-border);
+  color: var(--accent-cyan);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.hud-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.hud-value {
+  font-family: var(--font-digital);
+  font-size: 1.4rem;
+  color: var(--accent-cyan);
+  font-weight: 700;
+}
+
+.streak-glow {
+  color: var(--accent-yellow);
+  text-shadow: 0 0 10px rgba(255, 234, 0, 0.5);
+}
+
+.hud-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.hud-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--panel-border);
+  color: var(--text-primary);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: all 0.2s ease;
+}
+
+.hud-btn:hover {
+  background: rgba(0, 242, 254, 0.2);
+  border-color: var(--accent-cyan);
+}
+
+/* Timer Bar */
+.timer-bar-container {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  z-index: 19;
+}
+
+.timer-bar {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, var(--accent-green) 0%, var(--accent-yellow) 50%, var(--accent-magenta) 100%);
+  transition: width 0.1s linear;
+}
+
+/* Main Viewport with 3D Perspective */
+.viewport {
+  flex: 1;
+  position: relative;
+  perspective: 600px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stage-3d {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 3D Grid Effects */
+.grid-floor, .grid-ceiling {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 242, 254, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 242, 254, 0.1) 1px, transparent 1px);
+}
+
+.grid-floor {
+  bottom: 0;
+  transform: rotateX(75deg) translateY(120px) translateZ(-100px);
+}
+
+.grid-ceiling {
+  top: 0;
+  transform: rotateX(-75deg) translateY(-120px) translateZ(-100px);
+}
+
+/* Approaching 3D Wall */
+.wall-3d {
+  position: absolute;
+  width: 480px;
+  height: 360px;
+  background: repeating-linear-gradient(
+    45deg,
+    #1e293b,
+    #1e293b 15px,
+    #0f172a 15px,
+    #0f172a 30px
+  );
+  border: 4px solid var(--accent-magenta);
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(255, 8, 68, 0.4);
+  transform: translateZ(-800px) scale(0.1);
+  opacity: 0.3;
+  transition: transform 0.05s linear, opacity 0.05s linear;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.wall-3d.approaching {
+  /* Animation driven by JS game loop */
+}
+
+.wall-3d.passed {
+  animation: wallPass 0.5s ease-out forwards;
+}
+
+.wall-3d.crashed {
+  animation: wallCrash 0.5s ease-out forwards;
+}
+
+@keyframes wallPass {
+  0% { transform: translateZ(100px) scale(1.4); opacity: 1; filter: brightness(1.5) drop-shadow(0 0 30px #00e676); }
+  100% { transform: translateZ(500px) scale(2.5); opacity: 0; }
+}
+
+@keyframes wallCrash {
+  0% { transform: translateZ(0) scale(1); border-color: var(--accent-magenta); }
+  50% { transform: translateZ(50px) scale(1.1) rotate(3deg); background: rgba(255, 8, 68, 0.9); }
+  100% { transform: translateZ(100px) scale(1.3); opacity: 0; }
+}
+
+.wall-title {
+  font-weight: 800;
+  color: var(--accent-magenta);
+  letter-spacing: 2px;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 8px rgba(255, 8, 68, 0.8);
+}
+
+.wall-hole-svg {
+  width: 220px;
+  height: 160px;
+  filter: drop-shadow(0 0 10px var(--accent-cyan));
+}
+
+/* Player Station (Triangle Display) */
+.player-station {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.question-header {
+  background: rgba(10, 15, 30, 0.9);
+  border: 1px solid var(--accent-cyan);
+  padding: 0.5rem 1.25rem;
+  border-radius: 30px;
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+}
+
+.question-text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+}
+
+.triangle-card {
+  background: var(--panel-bg);
+  border: 2px solid var(--panel-border);
+  border-radius: 16px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  backdrop-filter: blur(10px);
+}
+
+#triangle-svg {
+  width: 320px;
+  height: 220px;
+}
+
+/* SVG Styling */
+.triangle-path {
+  fill: rgba(0, 242, 254, 0.08);
+  stroke: var(--accent-cyan);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.right-angle-square {
+  fill: none;
+  stroke: var(--accent-yellow);
+  stroke-width: 2;
+}
+
+.angle-arc {
+  fill: none;
+  stroke: var(--accent-magenta);
+  stroke-width: 2.5;
+  stroke-dasharray: 4, 3;
+}
+
+.svg-label {
+  fill: #ffffff;
+  font-family: var(--font-digital);
+  font-size: 17px;
+  font-weight: bold;
+  text-anchor: middle;
+}
+
+.svg-label-unknown {
+  fill: var(--accent-yellow);
+  font-size: 20px;
+  animation: blinkText 1s infinite alternate;
+}
+
+@keyframes blinkText {
+  0% { opacity: 0.6; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1.1); }
+}
+
+/* Controls & Input Area */
+.game-controls {
+  background: rgba(10, 14, 26, 0.95);
+  border-top: 1px solid var(--panel-border);
+  padding: 0.8rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 20;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 440px;
+}
+
+.input-prefix {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+.input-display {
+  flex: 1;
+  background: #000;
+  border: 2px solid var(--accent-cyan);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-digital);
+  font-size: 1.8rem;
+  color: var(--accent-cyan);
+  text-align: right;
+  min-height: 48px;
+  box-shadow: inset 0 0 10px rgba(0, 242, 254, 0.2);
+}
+
+.input-display.placeholder {
+  color: rgba(0, 242, 254, 0.3);
+}
+
+.submit-action-btn {
+  background: linear-gradient(135deg, #00e676 0%, #00b0ff 100%);
+  color: #000;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0, 230, 118, 0.4);
+  transition: transform 0.15s ease;
+}
+
+.submit-action-btn:active {
+  transform: scale(0.95);
+}
+
+/* Touch Numpad */
+.numpad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.4rem;
+  width: 100%;
+  max-width: 320px;
+}
+
+.num-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-family: var(--font-digital);
+  font-size: 1.4rem;
+  font-weight: 700;
+  padding: 0.6rem 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.num-btn:active {
+  background: var(--accent-cyan);
+  color: #000;
+  transform: scale(0.92);
+}
+
+.action-dot {
+  color: var(--accent-yellow);
+}
+
+.action-back {
+  color: var(--accent-magenta);
+}
+
+/* Formula Drawer */
+.formula-drawer {
+  position: fixed;
+  top: 0;
+  right: -360px;
+  width: 340px;
+  height: 100vh;
+  background: rgba(13, 18, 34, 0.95);
+  border-left: 1px solid var(--accent-cyan);
+  backdrop-filter: blur(15px);
+  z-index: 100;
+  transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+}
+
+.formula-drawer.open {
+  right: 0;
+}
+
+.drawer-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--panel-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-drawer-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.drawer-content {
+  padding: 1.25rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.formula-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+}
+
+.formula-card h4 {
+  color: var(--accent-cyan);
+  margin-bottom: 0.4rem;
+
+}
+
+.formula-eq {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.formula-eq-bm {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+/* Game Over Modal */
+.game-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(5, 8, 17, 0.9);
+  backdrop-filter: blur(12px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.game-modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.game-modal-box {
+  background: #0d1222;
+  border: 2px solid var(--accent-magenta);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 0 40px rgba(255, 8, 68, 0.4);
+}
+
+.status-icon {
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.modal-stats {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1.25rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+}
+
+.restart-btn {
+  background: var(--accent-cyan);
+  color: #000;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+  width: 100%;
+}
