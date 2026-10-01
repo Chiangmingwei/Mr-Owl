@@ -1,4 +1,4 @@
-/* Trigonometry: Hole in the Wall Game Styles - High Contrast 3D & Responsive */
+/* Trigonometry: Hole in the Wall Game Styles - High Contrast 3D & Dynamic Proportional Geometry */
 :root {
   --bg-game: #070913;
   --panel-bg: rgba(10, 15, 30, 0.35);
@@ -279,21 +279,21 @@ body {
   background: var(--panel-bg);
   border: 1.5px solid var(--panel-border);
   border-radius: 16px;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.8rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }
 
 #triangle-svg {
-  width: 400px;
-  height: 230px;
-  max-width: 90vw;
+  width: 460px;
+  height: 250px;
+  max-width: 94vw;
 }
 
 /* SVG Styling */
 .triangle-path {
-  fill: rgba(0, 242, 254, 0.06);
+  fill: rgba(0, 242, 254, 0.08);
   stroke: var(--accent-cyan);
   stroke-width: 3.5;
   stroke-linecap: round;

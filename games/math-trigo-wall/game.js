@@ -1,6 +1,6 @@
 /**
  * Trigonometry: Hole in the Wall
- * Procedural Math Engine & Arcade Game Loop (Updated Durations & High-Contrast 3D Visuals)
+ * Procedural Math Engine & Arcade Game Loop (Dynamic Proportional Geometry & Non-Blocking SVG Layout)
  */
 
 // --- Game State & Configuration ---
@@ -287,7 +287,6 @@ function formatVal(num) {
  * Procedural Math Engine Question Generator
  */
 function generateQuestion() {
-  // Common Pythagorean Triples
   const triples = [
     [3, 4, 5],
     [5, 12, 13],
@@ -369,7 +368,7 @@ function generateQuestion() {
 }
 
 /**
- * Render Question UI & SVG Right-Triangle
+ * Render Question UI & Dynamic Proportional SVG Right-Triangle
  */
 function renderQuestionUI() {
   const dict = gameTranslations[currentLang] || gameTranslations.bm;
@@ -381,85 +380,150 @@ function renderQuestionUI() {
     qText.textContent = dict.findSide;
   }
 
-  // Draw Interactive SVG Right Triangle
   const svg = document.getElementById('triangle-svg');
   svg.innerHTML = ''; // Clear SVG
 
-  // Coordinates (viewBox 0 0 420 260): Bottom-Left (X1, Y1), Bottom-Right (X2, Y2), Top-Right (X3, Y3)
-  const x1 = 70, y1 = 195;
-  const x2 = 330, y2 = 195;
-  const x3 = 330, y3 = 45;
+  // --- Dynamic Proportional Geometry Calculation ---
+  // ViewBox: 0 0 480 270
+  const maxW = 230; // Max horizontal base width
+  const maxH = 160; // Max vertical height
+  const minW = 90;  // Min base width
+  const minH = 55;  // Min height
 
-  // 1. Triangle Path
+  const oppVal = currentQuestion.opp;
+  const adjVal = currentQuestion.adj;
+  const ratio = oppVal / adjVal; // aspect ratio = Opp / Adj
+
+  let W, H;
+  if (ratio > 1) {
+    // Tall triangle (Opp > Adj)
+    H = maxH;
+    W = Math.max(minW, Math.min(maxW, maxH / ratio));
+  } else {
+    // Wide or balanced triangle (Opp <= Adj)
+    W = maxW;
+    H = Math.max(minH, Math.min(maxH, maxW * ratio));
+  }
+
+  // Base coordinates: Bottom-Left (X1, Y1) fixed at (60, 215)
+  const x1 = 60;
+  const y1 = 215;
+  const x2 = x1 + W; // Bottom-Right vertex (<= 290 in 480-wide viewBox!)
+  const y2 = y1;
+  const x3 = x2;     // Top-Right vertex
+  const y3 = y1 - H;
+
+  // 1. Draw Triangle Polygon Path
   const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
   polygon.setAttribute('points', `${x1},${y1} ${x2},${y2} ${x3},${y3}`);
   polygon.setAttribute('class', 'triangle-path');
   svg.appendChild(polygon);
 
-  // 2. Right-angle square indicator at (X2, Y2)
+  // 2. Right-angle square indicator at (x2, y2)
+  const sqSize = Math.min(18, Math.min(W * 0.2, H * 0.2));
   const raSquare = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  raSquare.setAttribute('d', `M ${x2 - 18} ${y2} L ${x2 - 18} ${y2 - 18} L ${x2} ${y2 - 18}`);
+  raSquare.setAttribute('d', `M ${x2 - sqSize} ${y2} L ${x2 - sqSize} ${y2 - sqSize} L ${x2} ${y2 - sqSize}`);
   raSquare.setAttribute('class', 'right-angle-square');
   svg.appendChild(raSquare);
 
-  // 3. Theta Angle Arc at vertex (X1, Y1)
+  // 3. Theta Angle Arc & Label at vertex V1 (x1, y1)
+  const thetaRad = Math.atan2(H, W); // acute angle in radians
+  const arcR = Math.min(32, Math.min(W * 0.35, H * 0.35)); // dynamic arc radius
+  const arcEndX = x1 + arcR * Math.cos(thetaRad);
+  const arcEndY = y1 - arcR * Math.sin(thetaRad);
+
   const arc = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  arc.setAttribute('d', `M ${x1 + 35} ${y1} A 35 35 0 0 0 ${x1 + 30} ${y1 - 18}`);
+  arc.setAttribute('d', `M ${x1 + arcR} ${y1} A ${arcR} ${arcR} 0 0 0 ${arcEndX} ${arcEndY}`);
   arc.setAttribute('class', 'angle-arc');
   svg.appendChild(arc);
 
-  // Theta Angle Text Label (Placed at x1+55, y1-6 to avoid arc collision)
+  // Theta Angle Label positioned on angle bisector outside arc
+  const bisectorAngle = thetaRad / 2;
+  const labelDist = arcR + 24;
+  const thetaLabelX = x1 + labelDist * Math.cos(bisectorAngle);
+  const thetaLabelY = y1 - labelDist * Math.sin(bisectorAngle) + 5;
+
   const angleLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-  angleLabel.setAttribute('x', x1 + 55);
-  angleLabel.setAttribute('y', y1 - 6);
+  angleLabel.setAttribute('x', thetaLabelX);
+  angleLabel.setAttribute('y', thetaLabelY);
+  angleLabel.setAttribute('text-anchor', 'start');
   angleLabel.setAttribute('class', currentQuestion.targetType === 'angle' ? 'svg-label svg-label-unknown' : 'svg-label');
   angleLabel.textContent = currentQuestion.targetType === 'angle' ? 'θ = ?' : `θ = ${formatVal(currentQuestion.angleDeg)}°`;
   svg.appendChild(angleLabel);
 
   // 4. Side Labels
-  // Adjacent (Bottom side)
+  // Adjacent Label (Bottom side)
   const adjText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-  adjText.setAttribute('x', (x1 + x2) / 2);
-  adjText.setAttribute('y', y1 + 28);
+  adjText.setAttribute('x', x1 + W / 2);
+  adjText.setAttribute('y', y1 + 30);
   adjText.setAttribute('text-anchor', 'middle');
   adjText.setAttribute('class', currentQuestion.targetType === 'adj' ? 'svg-label svg-label-unknown' : 'svg-label');
   adjText.textContent = currentQuestion.targetType === 'adj' ? 'x = ?' : `Adj = ${formatVal(currentQuestion.adj)}`;
   svg.appendChild(adjText);
 
-  // Opposite (Right vertical side - text-anchor start with buffer at x2+15)
+  // Opposite Label (Right vertical side - positioned at x2 + 15 with text-anchor="start")
+  // Since x2 <= 290 in a 480-wide viewBox, x2 + 15 <= 305, giving 175px of width!
   const oppText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
   oppText.setAttribute('x', x2 + 15);
-  oppText.setAttribute('y', (y2 + y3) / 2 + 5);
+  oppText.setAttribute('y', y1 - H / 2 + 5);
   oppText.setAttribute('text-anchor', 'start');
   oppText.setAttribute('class', currentQuestion.targetType === 'opp' ? 'svg-label svg-label-unknown' : 'svg-label');
   oppText.textContent = currentQuestion.targetType === 'opp' ? 'x = ?' : `Opp = ${formatVal(currentQuestion.opp)}`;
   svg.appendChild(oppText);
 
-  // Hypotenuse (Slanted side)
+  // Hypotenuse Label (Slanted side - offset perpendicular to hypotenuse)
+  const hypMidX = x1 + W / 2;
+  const hypMidY = y1 - H / 2;
+  const hypLen = Math.sqrt(W * W + H * H);
+  const nx = -H / hypLen;
+  const ny = -W / hypLen;
+  const hypTextX = hypMidX + nx * 18;
+  const hypTextY = hypMidY + ny * 18;
+
   const hypText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-  hypText.setAttribute('x', (x1 + x3) / 2 - 15);
-  hypText.setAttribute('y', (y1 + y3) / 2 - 12);
-  hypText.setAttribute('text-anchor', 'end');
+  hypText.setAttribute('x', hypTextX);
+  hypText.setAttribute('y', hypTextY);
+  hypText.setAttribute('text-anchor', 'middle');
   hypText.setAttribute('class', currentQuestion.targetType === 'hyp' ? 'svg-label svg-label-unknown' : 'svg-label');
   hypText.textContent = currentQuestion.targetType === 'hyp' ? 'x = ?' : `Hyp = ${formatVal(currentQuestion.hyp)}`;
   svg.appendChild(hypText);
 
-  // Render SVG Cutout Hole preview on wall
-  renderWallHoleSVG();
+  // Render SVG Cutout Hole preview on wall matching W & H proportions!
+  renderWallHoleSVG(W, H);
 }
 
 /**
- * Render Cutout Triangle Hole on Approaching Wall
+ * Render Cutout Triangle Hole on Approaching Wall matching dynamic W & H proportions
  */
-function renderWallHoleSVG() {
+function renderWallHoleSVG(triW = 180, triH = 120) {
   const wallSvg = document.getElementById('wall-hole-svg');
   wallSvg.innerHTML = '';
 
+  const maxHoleW = 150;
+  const maxHoleH = 100;
+  const holeRatio = triH / triW;
+
+  let holeW, holeH;
+  if (holeRatio > 1) {
+    holeH = maxHoleH;
+    holeW = Math.max(35, Math.min(maxHoleW, maxHoleH / holeRatio));
+  } else {
+    holeW = maxHoleW;
+    holeH = Math.max(30, Math.min(maxHoleH, maxHoleW * holeRatio));
+  }
+
+  const hx1 = 35;
+  const hy1 = 125;
+  const hx2 = hx1 + holeW;
+  const hy2 = hy1;
+  const hx3 = hx2;
+  const hy3 = hy1 - holeH;
+
   const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-  polygon.setAttribute('points', '30,120 170,120 170,30');
-  polygon.setAttribute('fill', '#070913'); // Hole cutout
+  polygon.setAttribute('points', `${hx1},${hy1} ${hx2},${hy2} ${hx3},${hy3}`);
+  polygon.setAttribute('fill', '#070913'); // Black cutout hole
   polygon.setAttribute('stroke', '#00f2fe');
-  polygon.setAttribute('stroke-width', '4');
+  polygon.setAttribute('stroke-width', '3.5');
   wallSvg.appendChild(polygon);
 }
 
