@@ -1,6 +1,6 @@
 /**
  * Trigonometry: Hole in the Wall
- * Procedural Math Engine & Arcade Game Loop
+ * Procedural Math Engine & Arcade Game Loop (Updated Durations & High-Contrast 3D Visuals)
  */
 
 // --- Game State & Configuration ---
@@ -19,7 +19,8 @@ let userInput = '';
 // Game Loop & Wall Animation Timer
 let wallTimer = null;
 let wallProgress = 0; // 0 (far) to 100 (crash)
-let wallDuration = 12000; // milliseconds
+let wallDuration = 60000; // milliseconds (Level 2 default: 1 min)
+let remainingTimeMs = 60000;
 let isGameOver = false;
 
 // Web Audio API Synthesizer
@@ -29,11 +30,12 @@ let audioCtx = null;
 const gameTranslations = {
   bm: {
     difficulty: "Tahap:",
-    diffEasy: "Tahap 1: Mudah (Teorem Pythagoras)",
-    diffMedium: "Tahap 2: Sederhana (Nisbah Trigo)",
-    diffHard: "Tahap 3: Sukar (Perpuluhan)",
+    diffEasy: "Tahap 1: Mudah (2 Minit)",
+    diffMedium: "Tahap 2: Sederhana (1 Minit)",
+    diffHard: "Tahap 3: Sukar (30 Saat)",
     score: "SKOR",
     streak: "PENETAPAN",
+    timeLabel: "MASA",
     formulaBtn: "Formula",
     wallWarning: "DINGDING BERGERAK!",
     ansLabel: "Jawapan =",
@@ -52,11 +54,12 @@ const gameTranslations = {
   },
   en: {
     difficulty: "Difficulty:",
-    diffEasy: "Level 1: Easy (Pythagoras)",
-    diffMedium: "Level 2: Medium (Trigo Ratios)",
-    diffHard: "Level 3: Hard (Decimals)",
+    diffEasy: "Level 1: Easy (2 Min)",
+    diffMedium: "Level 2: Medium (1 Min)",
+    diffHard: "Level 3: Hard (30 Sec)",
     score: "SCORE",
     streak: "STREAK",
+    timeLabel: "TIME",
     formulaBtn: "Formulas",
     wallWarning: "WALL APPROACHING!",
     ansLabel: "Answer =",
@@ -75,11 +78,12 @@ const gameTranslations = {
   },
   cn: {
     difficulty: "难度级别:",
-    diffEasy: "第1关：简单 (勾股定理 / Pythagoras)",
-    diffMedium: "第2关：中等 (三角比 SOH CAH TOA)",
-    diffHard: "第3关：困难 (小数与弧度计算)",
+    diffEasy: "第1关：简单 (2分钟)",
+    diffMedium: "第2关：中等 (1分钟)",
+    diffHard: "第3关：困难 (30秒)",
     score: "得分",
     streak: "连胜",
+    timeLabel: "剩余时间",
     formulaBtn: "公式表",
     wallWarning: "墙壁快速逼近中！",
     ansLabel: "计算答案 =",
@@ -272,6 +276,14 @@ function updateInputDisplay() {
 }
 
 /**
+ * Helper: Format Numbers cleanly (e.g. 17 or 17.5 or 17.25)
+ */
+function formatVal(num) {
+  if (Number.isInteger(num)) return num.toString();
+  return (Math.round(num * 100) / 100).toString();
+}
+
+/**
  * Procedural Math Engine Question Generator
  */
 function generateQuestion() {
@@ -288,7 +300,8 @@ function generateQuestion() {
   let opp, adj, hyp, angleDeg, targetType, targetAnswer;
 
   if (difficulty === 1) {
-    // Easy: Pythagorean triples (whole numbers)
+    // Level 1: Easy (2 minutes / 120s)
+    wallDuration = 120000;
     const base = triples[Math.floor(Math.random() * triples.length)];
     const scale = Math.floor(Math.random() * 2) + 1; // 1 or 2
     opp = base[0] * scale;
@@ -296,7 +309,6 @@ function generateQuestion() {
     hyp = base[2] * scale;
     angleDeg = Math.round(Math.atan2(opp, adj) * (180 / Math.PI));
 
-    // Choose target to solve: 0 (opp), 1 (adj), 2 (hyp)
     const targetIdx = Math.floor(Math.random() * 3);
     if (targetIdx === 0) {
       targetType = 'opp';
@@ -308,17 +320,16 @@ function generateQuestion() {
       targetType = 'hyp';
       targetAnswer = hyp;
     }
-    wallDuration = 16000;
   } else if (difficulty === 2) {
-    // Medium: SOH CAH TOA (side or angle)
+    // Level 2: Medium (1 minute / 60s)
+    wallDuration = 60000;
     const base = triples[Math.floor(Math.random() * triples.length)];
-    const scale = (Math.random() * 1.5 + 0.8).toFixed(1);
+    const scale = parseFloat((Math.random() * 1.5 + 0.8).toFixed(1));
     opp = parseFloat((base[0] * scale).toFixed(1));
     adj = parseFloat((base[1] * scale).toFixed(1));
     hyp = parseFloat(Math.sqrt(opp * opp + adj * adj).toFixed(1));
     angleDeg = parseFloat((Math.atan2(opp, adj) * (180 / Math.PI)).toFixed(1));
 
-    // Random choice: find angle (40% chance) or side (60% chance)
     if (Math.random() < 0.4) {
       targetType = 'angle';
       targetAnswer = angleDeg;
@@ -327,9 +338,9 @@ function generateQuestion() {
       targetType = sides[Math.floor(Math.random() * sides.length)];
       targetAnswer = targetType === 'opp' ? opp : (targetType === 'adj' ? adj : hyp);
     }
-    wallDuration = 11000;
   } else {
-    // Hard: Random decimal numbers
+    // Level 3: Hard (30 seconds / 30s)
+    wallDuration = 30000;
     adj = parseFloat((Math.random() * 15 + 5).toFixed(2));
     opp = parseFloat((Math.random() * 15 + 5).toFixed(2));
     hyp = parseFloat(Math.sqrt(opp * opp + adj * adj).toFixed(2));
@@ -343,7 +354,6 @@ function generateQuestion() {
       targetType = sides[Math.floor(Math.random() * sides.length)];
       targetAnswer = targetType === 'opp' ? opp : (targetType === 'adj' ? adj : hyp);
     }
-    wallDuration = 8000;
   }
 
   currentQuestion = {
@@ -375,10 +385,10 @@ function renderQuestionUI() {
   const svg = document.getElementById('triangle-svg');
   svg.innerHTML = ''; // Clear SVG
 
-  // Coordinates: Bottom-Left (X1, Y1), Bottom-Right (X2, Y2), Top-Right (X3, Y3)
-  const x1 = 40, y1 = 180;
-  const x2 = 250, y2 = 180;
-  const x3 = 250, y3 = 50;
+  // Coordinates (viewBox 0 0 420 260): Bottom-Left (X1, Y1), Bottom-Right (X2, Y2), Top-Right (X3, Y3)
+  const x1 = 70, y1 = 195;
+  const x2 = 330, y2 = 195;
+  const x3 = 330, y3 = 45;
 
   // 1. Triangle Path
   const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
@@ -398,37 +408,40 @@ function renderQuestionUI() {
   arc.setAttribute('class', 'angle-arc');
   svg.appendChild(arc);
 
-  // Theta Angle Text Label
+  // Theta Angle Text Label (Placed at x1+55, y1-6 to avoid arc collision)
   const angleLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-  angleLabel.setAttribute('x', x1 + 45);
-  angleLabel.setAttribute('y', y1 - 10);
+  angleLabel.setAttribute('x', x1 + 55);
+  angleLabel.setAttribute('y', y1 - 6);
   angleLabel.setAttribute('class', currentQuestion.targetType === 'angle' ? 'svg-label svg-label-unknown' : 'svg-label');
-  angleLabel.textContent = currentQuestion.targetType === 'angle' ? 'θ = ?' : `θ = ${currentQuestion.angleDeg}°`;
+  angleLabel.textContent = currentQuestion.targetType === 'angle' ? 'θ = ?' : `θ = ${formatVal(currentQuestion.angleDeg)}°`;
   svg.appendChild(angleLabel);
 
   // 4. Side Labels
   // Adjacent (Bottom side)
   const adjText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
   adjText.setAttribute('x', (x1 + x2) / 2);
-  adjText.setAttribute('y', y1 + 25);
+  adjText.setAttribute('y', y1 + 28);
+  adjText.setAttribute('text-anchor', 'middle');
   adjText.setAttribute('class', currentQuestion.targetType === 'adj' ? 'svg-label svg-label-unknown' : 'svg-label');
-  adjText.textContent = currentQuestion.targetType === 'adj' ? 'x = ?' : `Adj = ${currentQuestion.adj}`;
+  adjText.textContent = currentQuestion.targetType === 'adj' ? 'x = ?' : `Adj = ${formatVal(currentQuestion.adj)}`;
   svg.appendChild(adjText);
 
-  // Opposite (Right vertical side)
+  // Opposite (Right vertical side - text-anchor start with buffer at x2+15)
   const oppText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-  oppText.setAttribute('x', x2 + 35);
-  oppText.setAttribute('y', (y2 + y3) / 2);
+  oppText.setAttribute('x', x2 + 15);
+  oppText.setAttribute('y', (y2 + y3) / 2 + 5);
+  oppText.setAttribute('text-anchor', 'start');
   oppText.setAttribute('class', currentQuestion.targetType === 'opp' ? 'svg-label svg-label-unknown' : 'svg-label');
-  oppText.textContent = currentQuestion.targetType === 'opp' ? 'x = ?' : `Opp = ${currentQuestion.opp}`;
+  oppText.textContent = currentQuestion.targetType === 'opp' ? 'x = ?' : `Opp = ${formatVal(currentQuestion.opp)}`;
   svg.appendChild(oppText);
 
   // Hypotenuse (Slanted side)
   const hypText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-  hypText.setAttribute('x', (x1 + x3) / 2 - 25);
+  hypText.setAttribute('x', (x1 + x3) / 2 - 15);
   hypText.setAttribute('y', (y1 + y3) / 2 - 12);
+  hypText.setAttribute('text-anchor', 'end');
   hypText.setAttribute('class', currentQuestion.targetType === 'hyp' ? 'svg-label svg-label-unknown' : 'svg-label');
-  hypText.textContent = currentQuestion.targetType === 'hyp' ? 'x = ?' : `Hyp = ${currentQuestion.hyp}`;
+  hypText.textContent = currentQuestion.targetType === 'hyp' ? 'x = ?' : `Hyp = ${formatVal(currentQuestion.hyp)}`;
   svg.appendChild(hypText);
 
   // Render SVG Cutout Hole preview on wall
@@ -443,8 +456,8 @@ function renderWallHoleSVG() {
   wallSvg.innerHTML = '';
 
   const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-  polygon.setAttribute('points', '30,130 170,130 170,30');
-  polygon.setAttribute('fill', '#070913'); // Black hole
+  polygon.setAttribute('points', '30,120 170,120 170,30');
+  polygon.setAttribute('fill', '#070913'); // Hole cutout
   polygon.setAttribute('stroke', '#00f2fe');
   polygon.setAttribute('stroke-width', '4');
   wallSvg.appendChild(polygon);
@@ -476,6 +489,7 @@ function resetWallAnimation() {
   wallProgress = 0;
   const wall = document.getElementById('approaching-wall');
   const timerBar = document.getElementById('timer-bar');
+  const distTag = document.getElementById('wall-distance-tag');
   
   wall.className = 'wall-3d';
   
@@ -483,22 +497,47 @@ function resetWallAnimation() {
 
   wallTimer = setInterval(() => {
     const elapsed = Date.now() - startTime;
+    remainingTimeMs = Math.max(0, wallDuration - elapsed);
     wallProgress = (elapsed / wallDuration) * 100;
+
+    // Update Digital Timer Display (MM:SS)
+    updateDigitalTimer(remainingTimeMs);
+
+    // Update Distance Indicator (e.g. 100m -> 0m)
+    const distanceMeters = Math.max(0, Math.round((1 - wallProgress / 100) * 100));
+    if (distTag) {
+      distTag.textContent = `DISTANCE: ${distanceMeters}m`;
+    }
 
     if (wallProgress >= 100) {
       clearInterval(wallTimer);
       triggerWallCrash();
     } else {
-      // Scale wall 3D depth from Z=-800px (scale 0.1) to Z=0 (scale 1)
-      const currentZ = -800 + (wallProgress / 100) * 800;
-      const currentScale = 0.1 + (wallProgress / 100) * 0.9;
-      const currentOpacity = 0.3 + (wallProgress / 100) * 0.7;
+      // 3D Perspective Scaling: Continuous movement from Z=-900px (scale 0.15) to Z=0 (scale 1.0)
+      const currentZ = -900 + (wallProgress / 100) * 900;
+      const currentScale = 0.15 + (wallProgress / 100) * 0.85;
+      const currentOpacity = 0.4 + (wallProgress / 100) * 0.6;
 
       wall.style.transform = `translateZ(${currentZ}px) scale(${currentScale})`;
       wall.style.opacity = currentOpacity;
       timerBar.style.width = `${100 - wallProgress}%`;
     }
-  }, 30);
+  }, 50);
+}
+
+/**
+ * Update Digital Clock Display (MM:SS)
+ */
+function updateDigitalTimer(timeMs) {
+  const totalSeconds = Math.ceil(timeMs / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  const formattedStr = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  
+  const timerElem = document.getElementById('digital-timer-display');
+  if (timerElem) {
+    timerElem.textContent = formattedStr;
+  }
 }
 
 /**
@@ -510,7 +549,7 @@ function submitAnswer() {
   const userVal = parseFloat(userInput);
   const correctVal = currentQuestion.targetAnswer;
 
-  // Tolerance check (exact integer match or within +-0.1)
+  // Tolerance check (exact integer match or within +-0.15)
   const isCorrect = Math.abs(userVal - correctVal) <= 0.15;
 
   if (isCorrect) {

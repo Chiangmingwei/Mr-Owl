@@ -16,10 +16,15 @@
       <div class="hud-item level-selector-container">
         <label for="difficulty-select" data-i18n="difficulty">Difficulty:</label>
         <select id="difficulty-select" class="diff-select">
-          <option value="1" data-i18n="diffEasy">Level 1: Easy (Pythagoras)</option>
-          <option value="2" data-i18n="diffMedium" selected>Level 2: Medium (Trigo Ratios)</option>
-          <option value="3" data-i18n="diffHard">Level 3: Hard (Decimals)</option>
+          <option value="1" data-i18n="diffEasy">Level 1: Easy (2 min)</option>
+          <option value="2" data-i18n="diffMedium" selected>Level 2: Medium (1 min)</option>
+          <option value="3" data-i18n="diffHard">Level 3: Hard (30 sec)</option>
         </select>
+      </div>
+
+      <div class="hud-item timer-box">
+        <span class="hud-label" data-i18n="timeLabel">TIME</span>
+        <span id="digital-timer-display" class="hud-value timer-glow">01:00</span>
       </div>
 
       <div class="hud-item score-box">
@@ -59,8 +64,9 @@
         <div id="approaching-wall" class="wall-3d">
           <div class="wall-face">
             <div class="wall-title" data-i18n="wallWarning">WALL APPROACHING!</div>
+            <div id="wall-distance-tag" class="wall-distance">DISTANCE: 100m</div>
             <!-- SVG Cutout Hole preview on the wall -->
-            <svg id="wall-hole-svg" class="wall-hole-svg" viewBox="0 0 200 150">
+            <svg id="wall-hole-svg" class="wall-hole-svg" viewBox="0 0 200 140">
               <!-- Rendered dynamically -->
             </svg>
           </div>
@@ -74,7 +80,7 @@
 
           <!-- Dynamic Interactive SVG Right Triangle -->
           <div class="triangle-card">
-            <svg id="triangle-svg" viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg">
+            <svg id="triangle-svg" viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg">
               <!-- Triangle background & elements rendered via JavaScript -->
             </svg>
           </div>

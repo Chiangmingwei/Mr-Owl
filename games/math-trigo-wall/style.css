@@ -1,8 +1,8 @@
-/* Trigonometry: Hole in the Wall Game Styles */
+/* Trigonometry: Hole in the Wall Game Styles - High Contrast 3D & Responsive */
 :root {
   --bg-game: #070913;
-  --panel-bg: rgba(15, 22, 41, 0.85);
-  --panel-border: rgba(0, 242, 254, 0.25);
+  --panel-bg: rgba(10, 15, 30, 0.35);
+  --panel-border: rgba(0, 242, 254, 0.4);
   --accent-cyan: #00f2fe;
   --accent-magenta: #ff0844;
   --accent-green: #00e676;
@@ -41,27 +41,28 @@ body {
 
 /* Header HUD */
 .game-hud {
-  background: rgba(10, 15, 30, 0.9);
-  border-bottom: 1px solid var(--panel-border);
-  padding: 0.6rem 1.25rem;
+  background: rgba(10, 15, 30, 0.95);
+  border-bottom: 1px solid rgba(0, 242, 254, 0.2);
+  padding: 0.4rem 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.75rem;
   z-index: 20;
+  flex-wrap: wrap;
 }
 
 .hud-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .diff-select {
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid var(--panel-border);
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--accent-cyan);
   color: var(--accent-cyan);
-  padding: 0.4rem 0.8rem;
+  padding: 0.35rem 0.65rem;
   border-radius: 6px;
   font-family: inherit;
   font-weight: 700;
@@ -70,7 +71,7 @@ body {
 }
 
 .hud-label {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 800;
   color: var(--text-muted);
   letter-spacing: 1px;
@@ -78,31 +79,36 @@ body {
 
 .hud-value {
   font-family: var(--font-digital);
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   color: var(--accent-cyan);
   font-weight: 700;
 }
 
+.timer-glow {
+  color: var(--accent-green);
+  text-shadow: 0 0 8px rgba(0, 230, 118, 0.6);
+}
+
 .streak-glow {
   color: var(--accent-yellow);
-  text-shadow: 0 0 10px rgba(255, 234, 0, 0.5);
+  text-shadow: 0 0 8px rgba(255, 234, 0, 0.6);
 }
 
 .hud-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .hud-btn {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--panel-border);
   color: var(--text-primary);
-  padding: 0.4rem 0.8rem;
+  padding: 0.35rem 0.65rem;
   border-radius: 6px;
   cursor: pointer;
   font-family: inherit;
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   display: flex;
   align-items: center;
   gap: 0.3rem;
@@ -117,7 +123,7 @@ body {
 /* Timer Bar */
 .timer-bar-container {
   width: 100%;
-  height: 6px;
+  height: 5px;
   background: rgba(255, 255, 255, 0.1);
   overflow: hidden;
   z-index: 19;
@@ -134,7 +140,7 @@ body {
 .viewport {
   flex: 1;
   position: relative;
-  perspective: 600px;
+  perspective: 700px;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -157,49 +163,45 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-size: 40px 40px;
+  background-size: 50px 50px;
   background-image: 
-    linear-gradient(to right, rgba(0, 242, 254, 0.1) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 242, 254, 0.1) 1px, transparent 1px);
+    linear-gradient(to right, rgba(0, 242, 254, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 242, 254, 0.12) 1px, transparent 1px);
 }
 
 .grid-floor {
   bottom: 0;
-  transform: rotateX(75deg) translateY(120px) translateZ(-100px);
+  transform: rotateX(75deg) translateY(140px) translateZ(-100px);
 }
 
 .grid-ceiling {
   top: 0;
-  transform: rotateX(-75deg) translateY(-120px) translateZ(-100px);
+  transform: rotateX(-75deg) translateY(-140px) translateZ(-100px);
 }
 
-/* Approaching 3D Wall */
+/* Approaching 3D Wall Frame */
 .wall-3d {
   position: absolute;
-  width: 480px;
-  height: 360px;
+  width: 580px;
+  height: 380px;
   background: repeating-linear-gradient(
     45deg,
-    #1e293b,
-    #1e293b 15px,
-    #0f172a 15px,
-    #0f172a 30px
+    rgba(30, 41, 59, 0.95),
+    rgba(30, 41, 59, 0.95) 20px,
+    rgba(15, 23, 42, 0.95) 20px,
+    rgba(15, 23, 42, 0.95) 40px
   );
-  border: 4px solid var(--accent-magenta);
-  border-radius: 12px;
-  box-shadow: 0 0 30px rgba(255, 8, 68, 0.4);
-  transform: translateZ(-800px) scale(0.1);
-  opacity: 0.3;
+  border: 5px solid var(--accent-magenta);
+  border-radius: 16px;
+  box-shadow: 0 0 50px rgba(255, 8, 68, 0.6);
+  transform: translateZ(-900px) scale(0.15);
+  opacity: 0.4;
   transition: transform 0.05s linear, opacity 0.05s linear;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 5;
-}
-
-.wall-3d.approaching {
-  /* Animation driven by JS game loop */
 }
 
 .wall-3d.passed {
@@ -211,14 +213,14 @@ body {
 }
 
 @keyframes wallPass {
-  0% { transform: translateZ(100px) scale(1.4); opacity: 1; filter: brightness(1.5) drop-shadow(0 0 30px #00e676); }
-  100% { transform: translateZ(500px) scale(2.5); opacity: 0; }
+  0% { transform: translateZ(100px) scale(1.4); opacity: 1; filter: brightness(1.6) drop-shadow(0 0 40px #00e676); }
+  100% { transform: translateZ(600px) scale(3); opacity: 0; }
 }
 
 @keyframes wallCrash {
   0% { transform: translateZ(0) scale(1); border-color: var(--accent-magenta); }
-  50% { transform: translateZ(50px) scale(1.1) rotate(3deg); background: rgba(255, 8, 68, 0.9); }
-  100% { transform: translateZ(100px) scale(1.3); opacity: 0; }
+  50% { transform: translateZ(60px) scale(1.15) rotate(3deg); background: rgba(255, 8, 68, 0.95); }
+  100% { transform: translateZ(120px) scale(1.4); opacity: 0; }
 }
 
 .wall-title {
@@ -226,14 +228,26 @@ body {
   color: var(--accent-magenta);
   letter-spacing: 2px;
   font-size: 1.1rem;
-  margin-bottom: 1rem;
-  text-shadow: 0 0 8px rgba(255, 8, 68, 0.8);
+  margin-bottom: 0.3rem;
+  text-shadow: 0 0 10px rgba(255, 8, 68, 0.9);
+}
+
+.wall-distance {
+  font-family: var(--font-digital);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent-yellow);
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid var(--accent-yellow);
+  margin-bottom: 0.75rem;
 }
 
 .wall-hole-svg {
-  width: 220px;
-  height: 160px;
-  filter: drop-shadow(0 0 10px var(--accent-cyan));
+  width: 260px;
+  height: 180px;
+  filter: drop-shadow(0 0 15px var(--accent-cyan));
 }
 
 /* Player Station (Triangle Display) */
@@ -243,40 +257,43 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 
 .question-header {
-  background: rgba(10, 15, 30, 0.9);
+  background: rgba(10, 15, 30, 0.95);
   border: 1px solid var(--accent-cyan);
-  padding: 0.5rem 1.25rem;
+  padding: 0.4rem 1.1rem;
   border-radius: 30px;
-  box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
 }
 
 .question-text {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--accent-cyan);
 }
 
+/* Semi-transparent Glassmorphism Triangle Card */
 .triangle-card {
   background: var(--panel-bg);
-  border: 2px solid var(--panel-border);
+  border: 1.5px solid var(--panel-border);
   border-radius: 16px;
-  padding: 1rem 1.5rem;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  backdrop-filter: blur(10px);
+  padding: 0.5rem 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 #triangle-svg {
-  width: 320px;
-  height: 220px;
+  width: 400px;
+  height: 230px;
+  max-width: 90vw;
 }
 
 /* SVG Styling */
 .triangle-path {
-  fill: rgba(0, 242, 254, 0.08);
+  fill: rgba(0, 242, 254, 0.06);
   stroke: var(--accent-cyan);
   stroke-width: 3.5;
   stroke-linecap: round;
@@ -286,7 +303,7 @@ body {
 .right-angle-square {
   fill: none;
   stroke: var(--accent-yellow);
-  stroke-width: 2;
+  stroke-width: 2.2;
 }
 
 .angle-arc {
@@ -299,45 +316,44 @@ body {
 .svg-label {
   fill: #ffffff;
   font-family: var(--font-digital);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: bold;
-  text-anchor: middle;
 }
 
 .svg-label-unknown {
   fill: var(--accent-yellow);
-  font-size: 20px;
+  font-size: 19px;
   animation: blinkText 1s infinite alternate;
 }
 
 @keyframes blinkText {
   0% { opacity: 0.6; transform: scale(0.95); }
-  100% { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1.05); }
 }
 
 /* Controls & Input Area */
 .game-controls {
   background: rgba(10, 14, 26, 0.95);
-  border-top: 1px solid var(--panel-border);
-  padding: 0.8rem 1.25rem;
+  border-top: 1px solid rgba(0, 242, 254, 0.2);
+  padding: 0.5rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
   z-index: 20;
 }
 
 .input-container {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem;
   width: 100%;
-  max-width: 440px;
+  max-width: 400px;
 }
 
 .input-prefix {
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: var(--text-muted);
 }
 
@@ -346,12 +362,12 @@ body {
   background: #000;
   border: 2px solid var(--accent-cyan);
   border-radius: 8px;
-  padding: 0.5rem 1rem;
+  padding: 0.35rem 0.8rem;
   font-family: var(--font-digital);
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: var(--accent-cyan);
   text-align: right;
-  min-height: 48px;
+  min-height: 42px;
   box-shadow: inset 0 0 10px rgba(0, 242, 254, 0.2);
 }
 
@@ -363,13 +379,13 @@ body {
   background: linear-gradient(135deg, #00e676 0%, #00b0ff 100%);
   color: #000;
   border: none;
-  padding: 0.6rem 1.25rem;
+  padding: 0.5rem 1.1rem;
   border-radius: 8px;
   font-family: inherit;
   font-weight: 800;
-  font-size: 1.1rem;
+  font-size: 1rem;
   cursor: pointer;
-  box-shadow: 0 0 15px rgba(0, 230, 118, 0.4);
+  box-shadow: 0 0 12px rgba(0, 230, 118, 0.4);
   transition: transform 0.15s ease;
 }
 
@@ -381,9 +397,9 @@ body {
 .numpad {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.4rem;
+  gap: 0.35rem;
   width: 100%;
-  max-width: 320px;
+  max-width: 300px;
 }
 
 .num-btn {
@@ -391,10 +407,10 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.15);
   color: #fff;
   font-family: var(--font-digital);
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  padding: 0.6rem 0;
-  border-radius: 8px;
+  padding: 0.45rem 0;
+  border-radius: 6px;
   cursor: pointer;
   transition: background 0.15s ease, transform 0.1s ease;
 }
@@ -468,7 +484,6 @@ body {
 .formula-card h4 {
   color: var(--accent-cyan);
   margin-bottom: 0.4rem;
-
 }
 
 .formula-eq {
@@ -509,7 +524,7 @@ body {
   background: #0d1222;
   border: 2px solid var(--accent-magenta);
   border-radius: 16px;
-  padding: 2rem;
+  padding: 1.75rem;
   text-align: center;
   max-width: 400px;
   width: 90%;
@@ -517,35 +532,35 @@ body {
 }
 
 .status-icon {
-  font-size: 3.5rem;
-  margin-bottom: 0.5rem;
+  font-size: 3rem;
+  margin-bottom: 0.3rem;
 }
 
 .modal-stats {
   background: rgba(255, 255, 255, 0.04);
   border-radius: 8px;
-  padding: 1rem;
-  margin: 1.25rem 0;
+  padding: 0.8rem;
+  margin: 1rem 0;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.5rem;
 }
 
 .stat-row {
   display: flex;
   justify-content: space-between;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 .restart-btn {
   background: var(--accent-cyan);
   color: #000;
   border: none;
-  padding: 0.8rem 1.5rem;
+  padding: 0.75rem 1.25rem;
   border-radius: 8px;
   font-family: inherit;
   font-weight: 800;
-  font-size: 1.1rem;
+  font-size: 1rem;
   cursor: pointer;
   box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
   width: 100%;
