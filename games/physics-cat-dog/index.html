@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Physics: Cat vs Dog - Projectile Battle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="game-container">
+    <!-- Top HUD Header -->
+    <header class="game-hud">
+      <div class="hud-item mode-selector">
+        <label for="mode-select" data-i18n="modeLabel">Game Mode:</label>
+        <select id="mode-select" class="hud-select">
+          <option value="single" data-i18n="modeSingle" selected>1 Player vs Computer AI</option>
+          <option value="pvp" data-i18n="modePvp">2 Player Local Battle (Q vs P)</option>
+        </select>
+      </div>
+
+      <div class="hud-item turn-display">
+        <span class="hud-label" data-i18n="currentTurn">TURN:</span>
+        <span id="turn-indicator" class="hud-value cat-turn">🐱 CAT'S TURN</span>
+      </div>
+
+      <div class="hud-item timer-box">
+        <span class="hud-label" data-i18n="timeLabel">TIME:</span>
+        <span id="shot-timer" class="hud-value timer-glow">30s</span>
+      </div>
+
+      <div class="hud-actions">
+        <button id="toggle-formula-btn" class="hud-btn" title="Physics Formula Sheet">
+          <span>🧪</span> <span data-i18n="formulaBtn">SPM Formulas</span>
+        </button>
+        <button id="audio-btn" class="hud-btn" title="Toggle Mute">
+          <span id="audio-icon">🔊</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Battle Canvas Arena (Cat vs Dog) -->
+    <main class="arena-viewport">
+      <!-- Health Bars Layer -->
+      <div class="health-overlay">
+        <!-- Cat Health (Left) -->
+        <div class="fighter-status left-status">
+          <div class="fighter-info">
+            <span class="avatar">🐱</span>
+            <div class="name-box">
+              <strong data-i18n="catName">Felix the Cat</strong>
+              <div class="streak-badge" id="cat-streak">Streak: 🔥 0</div>
+            </div>
+          </div>
+          <div class="hp-bar-container">
+            <div id="cat-hp-bar" class="hp-bar" style="width: 100%;"></div>
+            <span id="cat-hp-text" class="hp-text">100 / 100 HP</span>
+          </div>
+          <!-- Powerup Inventory -->
+          <div class="powerup-bar" id="cat-powerups">
+            <button class="powerup-btn" data-type="heal" title="Heal +30 HP (Requires 3 Streak)" disabled>🩹 +30 HP</button>
+            <button class="powerup-btn" data-type="double" title="2x Double Damage (Requires 3 Streak)" disabled>💥 2x Dmg</button>
+            <button class="powerup-btn" data-type="freeze" title="Freeze Opponent (Requires 3 Streak)" disabled>❄️ Freeze</button>
+          </div>
+        </div>
+
+        <!-- VS Badge -->
+        <div class="vs-badge">VS</div>
+
+        <!-- Dog Health (Right) -->
+        <div class="fighter-status right-status">
+          <div class="fighter-info">
+            <div class="name-box align-right">
+              <strong data-i18n="dogName">Buster the Dog</strong>
+              <div class="streak-badge" id="dog-streak">Streak: 🔥 0</div>
+            </div>
+            <span class="avatar">🐶</span>
+          </div>
+          <div class="hp-bar-container">
+            <div id="dog-hp-bar" class="hp-bar" style="width: 100%;"></div>
+            <span id="dog-hp-text" class="hp-text">100 / 100 HP</span>
+          </div>
+          <!-- Powerup Inventory -->
+          <div class="powerup-bar" id="dog-powerups">
+            <button class="powerup-btn" data-type="heal" title="Heal +30 HP (Requires 3 Streak)" disabled>🩹 +30 HP</button>
+            <button class="powerup-btn" data-type="double" title="2x Double Damage (Requires 3 Streak)" disabled>💥 2x Dmg</button>
+            <button class="powerup-btn" data-type="freeze" title="Freeze Opponent (Requires 3 Streak)" disabled>❄️ Freeze</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2D Physics Animation Canvas -->
+      <canvas id="battle-canvas" width="960" height="420"></canvas>
+
+      <!-- Hotkey Prompt Banner (2 Player Mode) -->
+      <div id="hotkey-banner" class="hotkey-banner hidden">
+        <span id="hotkey-prompt-text">Press <strong>[ Q ]</strong> for Cat or <strong>[ P ]</strong> for Dog to answer!</span>
+      </div>
+    </main>
+
+    <!-- Question & Controls Box -->
+    <footer class="game-controls">
+      <!-- SPM Physics Question Display -->
+      <div class="question-box">
+        <div class="question-badge">
+          <span>📐 SPM Physics Question (g = 9.8 ms⁻²)</span>
+        </div>
+        <p id="spm-question-text" class="spm-question">
+          Loading projectile motion calculation...
+        </p>
+      </div>
+
+      <!-- Input Display & Numpad -->
+      <div class="input-section">
+        <div class="input-container">
+          <span class="input-prefix" data-i18n="ansLabel">Answer =</span>
+          <div id="user-input-display" class="input-display placeholder">0</div>
+          <button id="submit-btn" class="submit-action-btn" data-i18n="launchBtn">LAUNCH SHOT! 🚀</button>
+        </div>
+
+        <!-- Touch Numpad -->
+        <div class="numpad">
+          <button class="num-btn" data-val="7">7</button>
+          <button class="num-btn" data-val="8">8</button>
+          <button class="num-btn" data-val="9">9</button>
+          
+          <button class="num-btn" data-val="4">4</button>
+          <button class="num-btn" data-val="5">5</button>
+          <button class="num-btn" data-val="6">6</button>
+          
+          <button class="num-btn" data-val="1">1</button>
+          <button class="num-btn" data-val="2">2</button>
+          <button class="num-btn" data-val="3">3</button>
+          
+          <button class="num-btn action-dot" data-val=".">.</button>
+          <button class="num-btn" data-val="0">0</button>
+          <button class="num-btn action-back" id="backspace-btn" data-val="back">⌫</button>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- SPM Physics Formula Cheat Sheet Drawer -->
+  <aside id="formula-drawer" class="formula-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <h3 data-i18n="formulaTitle">🧪 SPM Projectile Motion Formulas</h3>
+      <button id="close-formula-btn" class="close-drawer-btn">✕</button>
+    </div>
+    <div class="drawer-content">
+      <div class="formula-card">
+        <h4>Gravitational Acceleration</h4>
+        <p class="formula-eq">g = 9.8 m/s² (downward)</p>
+      </div>
+
+      <div class="formula-card">
+        <h4>Velocity Components</h4>
+        <p class="formula-eq">uₓ = u · cos(θ)</p>
+        <p class="formula-eq">uᵧ = u · sin(θ)</p>
+      </div>
+
+      <div class="formula-card">
+        <h4>Maximum Height (Hₘₐₓ)</h4>
+        <p class="formula-eq">Hₘₐₓ = (u · sin(θ))² / (2g)</p>
+      </div>
+
+      <div class="formula-card">
+        <h4>Time of Flight (T)</h4>
+        <p class="formula-eq">T = 2 · u · sin(θ) / g</p>
+      </div>
+
+      <div class="formula-card">
+        <h4>Horizontal Range (R)</h4>
+        <p class="formula-eq">R = u² · sin(2θ) / g</p>
+      </div>
+
+      <div class="formula-tips">
+        <p><strong>💡 Tip:</strong> Round answers to 2 decimal places if needed.</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Game Over / Victory Modal -->
+  <div id="game-over-modal" class="game-modal-overlay" aria-hidden="true">
+    <div class="game-modal-box">
+      <div id="modal-status-icon" class="status-icon">🏆</div>
+      <h2 id="modal-status-title">VICTORY!</h2>
+      <p id="modal-status-desc">Cat defeated Dog in the projectile battle!</p>
+      
+      <div class="modal-stats">
+        <div class="stat-row">
+          <span>Winner:</span>
+          <strong id="winner-val">🐱 Felix the Cat</strong>
+        </div>
+        <div class="stat-row">
+          <span>Rounds Played:</span>
+          <strong id="rounds-val">0</strong>
+        </div>
+      </div>
+
+      <button id="restart-btn" class="restart-btn" data-i18n="playAgain">Play Again 🔄</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

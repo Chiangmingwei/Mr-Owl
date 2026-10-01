@@ -57,7 +57,7 @@
         <div class="tabs" id="subject-tabs">
           <button class="tab-btn active" data-subject="all" data-i18n="allSubjects">All Subjects</button>
           <button class="tab-btn" data-subject="math" data-i18n="subjectMath">Mathematics</button>
-          <button class="tab-btn" data-subject="science" data-i18n="subjectScience">Science</button>
+          <button class="tab-btn" data-subject="science" data-i18n="subjectScience">Science / Physics</button>
           <button class="tab-btn" data-subject="history" data-i18n="subjectHistory">History</button>
         </div>
       </div>
@@ -88,7 +88,27 @@
             <span>🎯 Form 3 - Form 5 (KSSM)</span>
             <span>⭐ <span data-i18n="diffMedium">Medium</span></span>
           </div>
-          <button class="play-btn" onclick="openGameModal('games/math-trigo-wall/index.html')">
+          <button class="play-btn" onclick="openGameModal('games/math-trigo-wall/index.html', 'Trigonometry: Hole in the Wall')">
+            <span>▶</span> <span data-i18n="playButton">Play Game</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- Game Card 4: Physics Cat vs Dog Projectile Battle (ACTIVE) -->
+      <article class="game-card" data-subject="science" data-level="secondary">
+        <div class="card-media science-bg">
+          <div class="card-badge secondary" data-i18n="tagSecondary">Secondary</div>
+          <div class="card-badge science" data-i18n="tagScience">Physics</div>
+          <div class="game-preview-icon">🐱🚀🐶</div>
+        </div>
+        <div class="card-content">
+          <h3 data-i18n="game4Title">Physics: Cat vs Dog (Projectile Battle)</h3>
+          <p class="card-desc" data-i18n="game4Desc">Solve SPM Physics projectile motion calculations (g=9.8 ms⁻²) to launch accurate trajectory shots!</p>
+          <div class="card-meta">
+            <span>🎯 Form 4 - Form 5 (KSSM Physics)</span>
+            <span>🔥 1P vs AI / 2P Battle</span>
+          </div>
+          <button class="play-btn" onclick="openGameModal('games/physics-cat-dog/index.html', 'Physics: Cat vs Dog - Projectile Battle')">
             <span>▶</span> <span data-i18n="playButton">Play Game</span>
           </button>
         </div>

@@ -19,7 +19,7 @@ const translations = {
     levelLabel: "Tahap:",
     allSubjects: "Semua Subjek",
     subjectMath: "Matematik",
-    subjectScience: "Sains",
+    subjectScience: "Sains / Fizik",
     subjectHistory: "Sejarah",
     allLevels: "Semua Tahap",
     levelPrimary: "Sekolah Rendah (KSSR)",
@@ -27,7 +27,7 @@ const translations = {
     tagPrimary: "Sekolah Rendah",
     tagSecondary: "Sekolah Menengah",
     tagMath: "Matematik",
-    tagScience: "Sains",
+    tagScience: "Fizik",
     tagHistory: "Sejarah",
     diffMedium: "Sederhana",
     comingSoon: "Akan Datang",
@@ -36,6 +36,8 @@ const translations = {
     exitGame: "Keluar Permainan",
     game1Title: "Trigonometri: Lubang Dinding",
     game1Desc: "Hitung panjang sisi atau sudut segi tiga bersudut tegak (SOH CAH TOA) sebelum dinding bergerak melanggar anda!",
+    game4Title: "Fizik: Kucing vs Anjing (Pertempuran Projektil)",
+    game4Desc: "Selesaikan pengiraan gerakan projektil Fizik SPM (g=9.8 ms⁻²) untuk melancarkan tembakan tepat!",
     game2Title: "Makmal Sains: Fotosintesis Rush",
     game2Desc: "Imbangkan cahaya matahari, air, dan karbon dioksida untuk membantu tumbuhan berkembang!",
     game3Title: "Pengembaraan Kesultanan Melayu Melaka",
@@ -51,7 +53,7 @@ const translations = {
     levelLabel: "Level:",
     allSubjects: "All Subjects",
     subjectMath: "Mathematics",
-    subjectScience: "Science",
+    subjectScience: "Science / Physics",
     subjectHistory: "History",
     allLevels: "All Levels",
     levelPrimary: "Primary School (KSSR)",
@@ -59,7 +61,7 @@ const translations = {
     tagPrimary: "Primary",
     tagSecondary: "Secondary",
     tagMath: "Mathematics",
-    tagScience: "Science",
+    tagScience: "Physics",
     tagHistory: "History",
     diffMedium: "Medium",
     comingSoon: "Coming Soon",
@@ -68,6 +70,8 @@ const translations = {
     exitGame: "Exit / Key Out",
     game1Title: "Trigonometry: Hole in the Wall",
     game1Desc: "Calculate missing triangle sides or angles using SOH CAH TOA before the moving wall reaches you!",
+    game4Title: "Physics: Cat vs Dog (Projectile Battle)",
+    game4Desc: "Solve SPM Physics projectile motion calculations (g=9.8 ms⁻²) to launch accurate trajectory shots!",
     game2Title: "Science Lab: Photosynthesis Rush",
     game2Desc: "Balance sunlight, water, and carbon dioxide to help plants thrive in the tropical rainforest!",
     game3Title: "Melaka Sultanate Quest",
@@ -83,7 +87,7 @@ const translations = {
     levelLabel: "学习阶段:",
     allSubjects: "所有科目",
     subjectMath: "数学 (Matematik)",
-    subjectScience: "科学 (Sains)",
+    subjectScience: "科学 / 物理 (Fizik)",
     subjectHistory: "历史 (Sejarah)",
     allLevels: "所有阶段",
     levelPrimary: "小学 (Sekolah Rendah)",
@@ -91,7 +95,7 @@ const translations = {
     tagPrimary: "小学",
     tagSecondary: "中学",
     tagMath: "数学",
-    tagScience: "科学",
+    tagScience: "物理",
     tagHistory: "历史",
     diffMedium: "中等难度",
     comingSoon: "即将推出",
@@ -100,6 +104,8 @@ const translations = {
     exitGame: "退出游戏",
     game1Title: "三角函数：墙缝穿行 (Trigonometry Wall)",
     game1Desc: "在移动的墙壁靠近前，运用 SOH CAH TOA 计算直角三角形缺少的边长或角度！",
+    game4Title: "物理：猫狗大作战 (平抛与斜抛运动)",
+    game4Desc: "解答 SPM 物理斜抛运动公式 (g=9.8 ms⁻²)，发射精准炮弹击败对手！",
     game2Title: "科学实验室：光合作用冲刺",
     game2Desc: "平衡阳光、水分与二氧化碳，帮助热带雨林中的植物健康生长！",
     game3Title: "马六甲王朝历史大冒险",
@@ -199,7 +205,7 @@ function filterGameCards() {
 /**
  * Game Modal Launcher
  */
-function openGameModal(gamePath) {
+function openGameModal(gamePath, titleOverride) {
   const modal = document.getElementById('game-modal');
   const iframe = document.getElementById('game-iframe');
   const modalTitle = document.getElementById('modal-game-title');
@@ -211,8 +217,10 @@ function openGameModal(gamePath) {
   modal.classList.add('active');
   modal.setAttribute('aria-hidden', 'false');
   
-  // Set modal title based on current language
-  if (translations[currentLanguage]) {
+  // Set modal title based on parameters or translation
+  if (titleOverride) {
+    modalTitle.textContent = titleOverride;
+  } else if (translations[currentLanguage]) {
     modalTitle.textContent = translations[currentLanguage].game1Title;
   }
 }
