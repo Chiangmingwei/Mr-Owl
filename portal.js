@@ -2,8 +2,8 @@
  * EduQuest MY - Portal Logic & i18n Translation Engine
  */
 
-// Current application state
-let currentLanguage = 'bm';
+// Current application state (Default Language: English)
+let currentLanguage = 'en';
 let activeSubject = 'all';
 let activeLevel = 'all';
 
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLanguageSwitcher();
   initFilters();
   initModalListeners();
-  updateLanguage('bm'); // Default language BM
+  updateLanguage('en'); // Default language EN
 });
 
 /**

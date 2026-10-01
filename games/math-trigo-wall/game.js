@@ -1,10 +1,10 @@
 /**
  * Trigonometry: Hole in the Wall
- * Procedural Math Engine & Arcade Game Loop (Dynamic Proportional Geometry & Non-Blocking SVG Layout)
+ * Procedural Math Engine & Arcade Game Loop (Centered Proportional Geometry & EN Default Language)
  */
 
-// --- Game State & Configuration ---
-let currentLang = 'bm';
+// --- Game State & Configuration (Default Language: English) ---
+let currentLang = 'en';
 let difficulty = 2; // 1: Easy, 2: Medium, 3: Hard
 let score = 0;
 let streak = 0;
@@ -28,30 +28,6 @@ let audioCtx = null;
 
 // --- i18n Translations for Mini-Game ---
 const gameTranslations = {
-  bm: {
-    difficulty: "Tahap:",
-    diffEasy: "Tahap 1: Mudah (2 Minit)",
-    diffMedium: "Tahap 2: Sederhana (1 Minit)",
-    diffHard: "Tahap 3: Sukar (30 Saat)",
-    score: "SKOR",
-    streak: "PENETAPAN",
-    timeLabel: "MASA",
-    formulaBtn: "Formula",
-    wallWarning: "DINGDING BERGERAK!",
-    ansLabel: "Jawapan =",
-    submit: "LULUS! ✓",
-    formulaTitle: "📐 Formula SOH CAH TOA",
-    crashTitle: "DINGDING TERLANGGAR!",
-    crashDesc: "Anda tidak dapat melepasi lubang dinding tepat pada masanya.",
-    passTitle: "BERJAYA MELEPASI!",
-    passDesc: "Jawapan anda tepat! Segi tiga anda melepasi lubang dinding!",
-    finalScore: "Skor Akhir:",
-    maxStreak: "Penetapan Maksimum:",
-    correctAnswers: "Dinding Dilepasi:",
-    playAgain: "Main Semula 🔄",
-    findSide: "Hitung panjang sisi x (2 tempat perpuluhan jika perlu)",
-    findAngle: "Hitung sudut θ dalam darjah (°)"
-  },
   en: {
     difficulty: "Difficulty:",
     diffEasy: "Level 1: Easy (2 Min)",
@@ -75,6 +51,30 @@ const gameTranslations = {
     playAgain: "Play Again 🔄",
     findSide: "Find missing side x (round to 2 d.p. if required)",
     findAngle: "Find angle θ in degrees (°)"
+  },
+  bm: {
+    difficulty: "Tahap:",
+    diffEasy: "Tahap 1: Mudah (2 Minit)",
+    diffMedium: "Tahap 2: Sederhana (1 Minit)",
+    diffHard: "Tahap 3: Sukar (30 Saat)",
+    score: "SKOR",
+    streak: "PENETAPAN",
+    timeLabel: "MASA",
+    formulaBtn: "Formula",
+    wallWarning: "DINGDING BERGERAK!",
+    ansLabel: "Jawapan =",
+    submit: "LULUS! ✓",
+    formulaTitle: "📐 Formula SOH CAH TOA",
+    crashTitle: "DINGDING TERLANGGAR!",
+    crashDesc: "Anda tidak dapat melepasi lubang dinding tepat pada masanya.",
+    passTitle: "BERJAYA MELEPASI!",
+    passDesc: "Jawapan anda tepat! Segi tiga anda melepasi lubang dinding!",
+    finalScore: "Skor Akhir:",
+    maxStreak: "Penetapan Maksimum:",
+    correctAnswers: "Dinding Dilepasi:",
+    playAgain: "Main Semula 🔄",
+    findSide: "Hitung panjang sisi x (2 tempat perpuluhan jika perlu)",
+    findAngle: "Hitung sudut θ dalam darjah (°)"
   },
   cn: {
     difficulty: "难度级别:",
@@ -112,13 +112,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Parse ?lang=bm|en|cn from URL search params
+ * Parse ?lang=bm|en|cn from URL search params (Default: en)
  */
 function parseUrlLanguage() {
   const urlParams = new URLSearchParams(window.location.search);
   const lang = urlParams.get('lang');
   if (lang && gameTranslations[lang]) {
     currentLang = lang;
+  } else {
+    currentLang = 'en';
   }
 }
 
@@ -175,7 +177,7 @@ function playSound(type) {
  * Update UI text based on language
  */
 function updateGameLanguage() {
-  const dict = gameTranslations[currentLang] || gameTranslations.bm;
+  const dict = gameTranslations[currentLang] || gameTranslations.en;
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n;
     if (dict[key]) {
@@ -368,10 +370,10 @@ function generateQuestion() {
 }
 
 /**
- * Render Question UI & Dynamic Proportional SVG Right-Triangle
+ * Render Question UI & Dynamic Proportional Centered SVG Right-Triangle
  */
 function renderQuestionUI() {
-  const dict = gameTranslations[currentLang] || gameTranslations.bm;
+  const dict = gameTranslations[currentLang] || gameTranslations.en;
   const qText = document.getElementById('question-text');
   
   if (currentQuestion.targetType === 'angle') {
@@ -383,12 +385,12 @@ function renderQuestionUI() {
   const svg = document.getElementById('triangle-svg');
   svg.innerHTML = ''; // Clear SVG
 
-  // --- Dynamic Proportional Geometry Calculation ---
+  // --- Dynamic Proportional Centered Geometry Calculation ---
   // ViewBox: 0 0 480 270
-  const maxW = 230; // Max horizontal base width
-  const maxH = 160; // Max vertical height
-  const minW = 90;  // Min base width
-  const minH = 55;  // Min height
+  const maxW = 210; // Max horizontal base width
+  const maxH = 155; // Max vertical height
+  const minW = 85;  // Min base width
+  const minH = 50;  // Min height
 
   const oppVal = currentQuestion.opp;
   const adjVal = currentQuestion.adj;
@@ -405,10 +407,12 @@ function renderQuestionUI() {
     H = Math.max(minH, Math.min(maxH, maxW * ratio));
   }
 
-  // Base coordinates: Bottom-Left (X1, Y1) fixed at (60, 215)
-  const x1 = 60;
-  const y1 = 215;
-  const x2 = x1 + W; // Bottom-Right vertex (<= 290 in 480-wide viewBox!)
+  // Calculate centered X position for vertex V1:
+  // Offset center to account for left theta label (~40px) vs right opp label (~80px)
+  const calcCenterX = 230 - W / 2;
+  const x1 = Math.max(75, Math.min(175, calcCenterX));
+  const y1 = 220;
+  const x2 = x1 + W; // Bottom-Right vertex
   const y2 = y1;
   const x3 = x2;     // Top-Right vertex
   const y3 = y1 - H;
@@ -461,10 +465,9 @@ function renderQuestionUI() {
   adjText.textContent = currentQuestion.targetType === 'adj' ? 'x = ?' : `Adj = ${formatVal(currentQuestion.adj)}`;
   svg.appendChild(adjText);
 
-  // Opposite Label (Right vertical side - positioned at x2 + 15 with text-anchor="start")
-  // Since x2 <= 290 in a 480-wide viewBox, x2 + 15 <= 305, giving 175px of width!
+  // Opposite Label (Right vertical side - positioned at x2 + 14 with text-anchor="start")
   const oppText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-  oppText.setAttribute('x', x2 + 15);
+  oppText.setAttribute('x', x2 + 14);
   oppText.setAttribute('y', y1 - H / 2 + 5);
   oppText.setAttribute('text-anchor', 'start');
   oppText.setAttribute('class', currentQuestion.targetType === 'opp' ? 'svg-label svg-label-unknown' : 'svg-label');
