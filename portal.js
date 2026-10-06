@@ -52,6 +52,8 @@ const translations = {
     note4Desc: "Terokai zaman kegemilangan perdagangan maritim Melaka abad ke-15 dan perundangan Melaka.",
     game1Title: "Trigonometri: Lubang Dinding",
     game1Desc: "Hitung panjang sisi atau sudut segi tiga bersudut tegak (SOH CAH TOA) sebelum dinding bergerak melanggar anda!",
+    trigoSlideTitle: "Trigonometri: Dari Sejarah ke Fungsi",
+    trigoSlideDesc: "Jelajahi 7 slide interaktif yang meneroka sejarah trigonometri, dari matematik Babylon hingga fungsi modern!",
     game4Title: "Fizik: Kucing vs Anjing (Pertempuran Projektil)",
     game4Desc: "Selesaikan pengiraan gerakan projektil Fizik SPM (g=9.8 ms⁻²) untuk melancarkan tembakan tepat!"
   },
@@ -97,6 +99,8 @@ const translations = {
     note4Desc: "Discover the golden age of 15th-century Melaka maritime trade, diplomatic ties, and legal codes.",
     game1Title: "Trigonometry: Hole in the Wall",
     game1Desc: "Calculate missing triangle sides or angles using SOH CAH TOA before the moving wall reaches you!",
+    trigoSlideTitle: "Trigonometry: From History to Function",
+    trigoSlideDesc: "Journey through 7 interactive slides exploring the history of trigonometry, from Babylonian mathematics to modern functions!",
     game4Title: "Physics: Cat vs Dog (Projectile Battle)",
     game4Desc: "Solve SPM Physics projectile motion calculations (g=9.8 ms⁻²) to launch accurate trajectory shots!"
   },
@@ -142,6 +146,8 @@ const translations = {
     note4Desc: "探索15世纪马六甲海上贸易枢纽、外交关系与马六甲法典。",
     game1Title: "三角函数：墙缝穿行 (Trigonometry Wall)",
     game1Desc: "在移动的墙壁靠近前，运用 SOH CAH TOA 计算直角三角形缺少的边长或角度！",
+    trigoSlideTitle: "三角函数：从历史到函数",
+    trigoSlideDesc: "通过7个交互式幻灯片探索三角函数的历史，从巴比伦数学到现代函数！",
     game4Title: "物理：猫狗大作战 (平抛与斜抛运动)",
     game4Desc: "解答 SPM 物理斜抛运动公式 (g=9.8 ms⁻²)，发射精准炮弹击败对手！"
   }
