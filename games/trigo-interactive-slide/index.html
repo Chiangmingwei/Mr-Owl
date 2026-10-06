@@ -16,13 +16,11 @@
       <div class="header-content">
         <h1 class="slide-title" data-i18n="mainTitle">Trigonometry: From History to Function</h1>
         <div class="header-controls">
-          <!-- Language Selector -->
           <div class="lang-selector">
             <button class="lang-btn active" data-lang="en" title="English">EN</button>
             <button class="lang-btn" data-lang="bm" title="Bahasa Malaysia">BM</button>
             <button class="lang-btn" data-lang="cn" title="中文">中文</button>
           </div>
-          <!-- Progress Indicator -->
           <div class="progress-info">
             <span class="slide-counter"><span id="current-slide">1</span> / 7</span>
           </div>
@@ -36,46 +34,54 @@
     <!-- Slides Container -->
     <main class="slides-wrapper">
       <!-- ============ SLIDE 1: Babylonian History ============ -->
-      <section class="slide" id="slide-1">
-        <div class="slide-content">
-          <h2 class="slide-heading" data-i18n="slide1Title">🏛️ Babylonian Origins of Trigonometry</h2>
-          
-          <div class="content-columns">
-            <div class="content-left">
+      <section class="slide active" id="slide-1">
+        <div class="slide-content slide-fit">
+          <div class="slide-row">
+            <div class="slide-col-left">
+              <h2 class="slide-heading" data-i18n="slide1Title">🏛️ Babylonian Origins</h2>
               <p class="slide-text" data-i18n="slide1Text1">
-                Trigonometry originated from the ancient Babylonian civilization, around 1800 BCE. 
-                Babylonian astronomers and mathematicians were the first to study angles and their relationships 
-                in triangles.
-              </p>
-              <p class="slide-text" data-i18n="slide1Text2">
-                They used sophisticated mathematical techniques to:
+                Trigonometry originated from ancient Babylon, around 1800 BCE.
               </p>
               <ul class="slide-list">
                 <li data-i18n="slide1Bullet1">Track celestial bodies and stars</li>
-                <li data-i18n="slide1Bullet2">Calculate distances without direct measurement</li>
-                <li data-i18n="slide1Bullet3">Develop early astronomy and calendar systems</li>
+                <li data-i18n="slide1Bullet2">Calculate distances without measurement</li>
+                <li data-i18n="slide1Bullet3">Develop astronomy and calendar systems</li>
               </ul>
             </div>
-            <div class="content-right">
-              <!-- SVG: Babylonian civilization illustration -->
-              <svg class="babylonian-illustration" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+            <div class="slide-col-right">
+              <svg class="babylon-illustration" viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg">
+                <!-- River -->
+                <path d="M 0 140 Q 75 130, 150 140 T 300 140" fill="#4A90E2" opacity="0.3"/>
+                <path d="M 0 150 Q 75 140, 150 150 T 300 150" fill="#4A90E2" opacity="0.2"/>
+                
                 <!-- Ziggurat (stepped pyramid) -->
                 <g id="ziggurat">
-                  <rect x="50" y="180" width="200" height="30" fill="#8B7355"/>
-                  <rect x="70" y="150" width="160" height="30" fill="#A0826D"/>
-                  <rect x="90" y="120" width="120" height="30" fill="#B89968"/>
-                  <rect x="110" y="90" width="80" height="30" fill="#D4A574"/>
+                  <rect x="80" y="160" width="140" height="15" fill="#8B7355" stroke="#654321" stroke-width="1"/>
+                  <rect x="90" y="145" width="120" height="15" fill="#A0826D" stroke="#654321" stroke-width="1"/>
+                  <rect x="100" y="130" width="100" height="15" fill="#B89968" stroke="#654321" stroke-width="1"/>
+                  <rect x="115" y="115" width="70" height="15" fill="#D4A574" stroke="#654321" stroke-width="1"/>
+                  <rect x="130" y="100" width="40" height="15" fill="#E8B87E" stroke="#654321" stroke-width="1"/>
                 </g>
-                <!-- Stars (representing astronomy) -->
-                <g id="stars">
-                  <circle cx="80" cy="40" r="3" fill="#FFD700"/>
-                  <circle cx="150" cy="20" r="3" fill="#FFD700"/>
-                  <circle cx="220" cy="50" r="3" fill="#FFD700"/>
-                  <circle cx="60" cy="80" r="2" fill="#FFD700"/>
-                  <circle cx="240" cy="100" r="2" fill="#FFD700"/>
+                
+                <!-- Temple on top -->
+                <rect x="125" y="85" width="50" height="20" fill="#C9A876" stroke="#654321" stroke-width="2"/>
+                <polygon points="150,85 130,70 170,70" fill="#E8B87E" stroke="#654321" stroke-width="1"/>
+                
+                <!-- Stars (astronomy) -->
+                <g id="stars" fill="#FFD700">
+                  <circle cx="50" cy="30" r="2"/>
+                  <circle cx="120" cy="20" r="2"/>
+                  <circle cx="200" cy="40" r="2"/>
+                  <circle cx="70" cy="60" r="1.5"/>
+                  <circle cx="240" cy="50" r="1.5"/>
                 </g>
-                <!-- Moon -->
-                <circle cx="200" cy="60" r="20" fill="#FFF8DC" opacity="0.9"/>
+                
+                <!-- Moon crescent -->
+                <circle cx="220" cy="35" r="12" fill="#FFF8DC" opacity="0.8"/>
+                <circle cx="224" cy="35" r="12" fill="#0F1419" opacity="0.3"/>
+                
+                <!-- Ground -->
+                <rect x="0" y="175" width="300" height="105" fill="#D2B48C" opacity="0.5"/>
               </svg>
             </div>
           </div>
@@ -84,88 +90,84 @@
 
       <!-- ============ SLIDE 2: Sexagesimal System ============ -->
       <section class="slide" id="slide-2">
-        <div class="slide-content">
-          <h2 class="slide-heading" data-i18n="slide2Title">🔢 The Sexagesimal (Base-60) System</h2>
+        <div class="slide-content slide-fit">
+          <h2 class="slide-heading" data-i18n="slide2Title">🔢 Base-60 (Sexagesimal) System</h2>
           
-          <div class="content-columns">
-            <div class="content-left">
+          <div class="sexagesimal-grid">
+            <!-- Left: Why 60 is special -->
+            <div class="sexagesimal-left">
               <p class="slide-text" data-i18n="slide2Text1">
-                The Babylonians used a <strong>sexagesimal system</strong> — a base-60 counting system, 
-                not the base-10 we use today.
+                Why is 60 special? It divides evenly by many numbers!
               </p>
-              <p class="slide-text" data-i18n="slide2Text2">
-                This ancient system still influences us:
+              <div class="divisibility-box">
+                <p data-i18n="slide2Divisible">60 is divisible by:</p>
+                <div class="divisibility-list">
+                  <div class="div-item">60 ÷ 1 = 60 ✓</div>
+                  <div class="div-item">60 ÷ 2 = 30 ✓</div>
+                  <div class="div-item">60 ÷ 3 = 20 ✓</div>
+                  <div class="div-item">60 ÷ 4 = 15 ✓</div>
+                  <div class="div-item">60 ÷ 5 = 12 ✓</div>
+                  <div class="div-item">60 ÷ 6 = 10 ✓</div>
+                  <div class="div-item">60 ÷ 10 = 6 ✓</div>
+                </div>
+              </div>
+              <p class="slide-text small-text" data-i18n="slide2NoDecimals">
+                No decimals needed! Easy to measure anything.
               </p>
-              <ul class="slide-list">
-                <li data-i18n="slide2Bullet1">60 seconds in a minute</li>
-                <li data-i18n="slide2Bullet2">60 minutes in an hour</li>
-                <li data-i18n="slide2Bullet3">360 degrees in a circle (6 × 60)</li>
-              </ul>
             </div>
-            <div class="content-right">
-              <!-- SVG: Sexagesimal system visualization -->
-              <svg class="sexagesimal-viz" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-                <!-- Clock-like representation -->
-                <circle cx="150" cy="150" r="100" fill="none" stroke="#4A90E2" stroke-width="2"/>
-                <!-- Hour markers (12 divisions) -->
-                <g stroke="#4A90E2" stroke-width="2">
-                  <line x1="150" y1="50" x2="150" y2="70"/>
-                  <line x1="150" y1="230" x2="150" y2="250"/>
-                  <line x1="50" y1="150" x2="70" y2="150"/>
-                  <line x1="230" y1="150" x2="250" y2="150"/>
-                  <!-- Diagonal markers -->
-                  <line x1="91" y1="75" x2="103" y2="87"/>
-                  <line x1="197" y1="213" x2="209" y2="225"/>
-                  <line x1="209" y1="87" x2="197" y2="75"/>
-                  <line x1="103" y1="213" x2="91" y2="225"/>
-                </g>
-                <!-- Center dot -->
-                <circle cx="150" cy="150" r="4" fill="#4A90E2"/>
-                <!-- Annotation text -->
-                <text x="150" y="280" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">
-                  Base-60 System
-                </text>
-              </svg>
-            </div>
-          </div>
 
-          <!-- Division Info -->
-          <div class="info-box">
-            <p data-i18n="slide2InfoText">
-              The Babylonians divided angles into 60 equal parts. Since 6 triangles can form a complete circle, 
-              they established that <strong>1 circle = 6 × 60 = 360 degrees</strong>.
-            </p>
+            <!-- Right: Visual representation -->
+            <div class="sexagesimal-right">
+              <p class="slide-text" data-i18n="slide2Triangle">60 equal angles in a triangle:</p>
+              <svg class="sexagesimal-viz" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+                <!-- Equilateral triangle -->
+                <polygon points="100,20 30,180 170,180" fill="none" stroke="#4A90E2" stroke-width="2"/>
+                
+                <!-- Base line for angles -->
+                <line x1="30" y1="180" x2="170" y2="180" stroke="#E74C3C" stroke-width="2" stroke-dasharray="3,3"/>
+                
+                <!-- Angle divisions (showing 6 major divisions = 60/6 = 10° each) -->
+                <g stroke="#999" stroke-width="0.5" opacity="0.6">
+                  <line x1="30" y1="180" x2="39" y2="177"/><line x1="39" y1="177" x2="46" y2="171"/>
+                  <line x1="46" y1="171" x2="53" y2="164"/><line x1="53" y1="164" x2="60" y2="157"/>
+                  <line x1="60" y1="157" x2="67" y2="147"/><line x1="67" y1="147" x2="73" y2="138"/>
+                  <line x1="73" y1="138" x2="80" y2="128"/><line x1="80" y1="128" x2="87" y2="118"/>
+                  <line x1="87" y1="118" x2="93" y2="107"/><line x1="93" y1="107" x2="100" y2="95"/>
+                </g>
+                
+                <!-- Main angle arc -->
+                <path d="M 50 180 A 20 20 0 0 1 62 160" fill="none" stroke="#E74C3C" stroke-width="2"/>
+                <text x="42" y="175" font-size="11" font-weight="bold" fill="#E74C3C">60°</text>
+              </svg>
+              <p class="slide-text tiny-text" data-i18n="slide2Consequence">
+                One angle of equilateral triangle = 60°
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- ============ SLIDE 3: Circle Division (360°) ============ -->
+      <!-- ============ SLIDE 3: Circle Formation (360°) ============ -->
       <section class="slide" id="slide-3">
-        <div class="slide-content">
-          <h2 class="slide-heading" data-i18n="slide3Title">⭕ The 360° Circle: Six Triangles</h2>
+        <div class="slide-content slide-fit">
+          <h2 class="slide-heading" data-i18n="slide3Title">⭕ Six Triangles = One Circle</h2>
           
-          <p class="slide-text" data-i18n="slide3Text">
-            Try dragging the <span class="highlight">6 triangles</span> below into the circular box on the right. 
-            You'll see that 6 equal triangles perfectly form one complete circle!
+          <p class="slide-text center-text" data-i18n="slide3Text">
+            Drag 6 triangles to the circle box to discover why a circle is 360°
           </p>
 
-          <!-- Interactive Circle Formation -->
           <div class="circle-formation-area">
             <!-- Draggable Triangles -->
-            <div class="triangles-source">
-              <p class="instruction-text" data-i18n="dragTriangles">Drag triangles here →</p>
-              <div class="draggable-triangles" id="triangles-pool">
-                <!-- Triangles will be generated by JavaScript -->
-              </div>
+            <div class="triangles-source" id="triangles-pool">
+              <p class="instruction-text" data-i18n="dragTriangles">Drag here:</p>
+              <!-- Triangles generated by JavaScript -->
             </div>
 
             <!-- Target Circle Box -->
             <div class="circle-target-box" id="circle-target">
-              <svg class="circle-guide" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="110" cy="110" r="100" fill="none" stroke="#DDD" stroke-width="2" stroke-dasharray="5,5"/>
-                <text x="110" y="115" text-anchor="middle" font-size="16" font-weight="bold" fill="#999">
-                  360°
-                </text>
+              <svg class="circle-guide" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="90" cy="90" r="75" fill="none" stroke="#DDD" stroke-width="2" stroke-dasharray="5,5"/>
+                <text x="90" y="95" text-anchor="middle" font-size="14" font-weight="bold" fill="#999">360°</text>
               </svg>
               <div class="placed-triangles" id="placed-triangles"></div>
             </div>
@@ -174,183 +176,66 @@
           <!-- Feedback -->
           <div class="feedback-box" id="circle-feedback" style="display: none;">
             <p class="success-message" data-i18n="circleComplete">
-              ✅ Perfect! 6 triangles make a complete 360° circle!
+              ✅ Perfect! 6 × 60° = 360°! That's why a circle is 360 degrees!
             </p>
           </div>
         </div>
       </section>
 
-      <!-- ============ SLIDE 4: Right Triangle Components ============ -->
+      <!-- ============ SLIDE 4: Right Triangle Animation ============ -->
       <section class="slide" id="slide-4">
-        <div class="slide-content">
-          <h2 class="slide-heading" data-i18n="slide4Title">📐 Right Triangle: The Three Sides</h2>
+        <div class="slide-content slide-fit">
+          <h2 class="slide-heading" data-i18n="slide4Title">📐 From Equal Triangle to Right Triangle</h2>
           
-          <p class="slide-text" data-i18n="slide4Text">
-            When we study one angle (other than the right angle) in a right triangle, we identify three sides:
+          <p class="slide-text center-text" data-i18n="slide4Text">
+            Watch how a triangle changes and we identify three sides
           </p>
 
-          <div class="triangle-explanation">
-            <!-- SVG: Right Triangle with labeled sides -->
-            <svg class="right-triangle-diagram" viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
-              <!-- Triangle -->
-              <polygon points="50,300 50,100 300,300" fill="rgba(74,144,226,0.1)" stroke="#4A90E2" stroke-width="3"/>
-              
-              <!-- Right angle marker -->
-              <rect x="50" y="280" width="20" height="20" fill="none" stroke="#E74C3C" stroke-width="2"/>
-              
-              <!-- Labels and lines for sides -->
-              <!-- Hypotenuse (opposite to right angle) -->
-              <line x1="60" y1="85" x2="290" y2="290" stroke="#E74C3C" stroke-width="3"/>
-              <text x="185" y="155" font-size="16" font-weight="bold" fill="#E74C3C" text-anchor="middle">
-                Hypotenuse (H)
-              </text>
-              
-              <!-- Opposite side (opposite to studied angle θ) -->
-              <text x="25" y="200" font-size="14" font-weight="bold" fill="#27AE60" text-anchor="end">
-                Opposite (O)
-              </text>
-              <text x="35" y="280" font-size="12" fill="#27AE60">← O</text>
-              
-              <!-- Adjacent side (next to studied angle θ) -->
-              <text x="175" y="330" font-size="14" font-weight="bold" fill="#F39C12" text-anchor="middle">
-                Adjacent (A) →
-              </text>
-              
-              <!-- Angle θ at bottom left -->
-              <arc cx="70" cy="290" r="25" fill="none" stroke="#9B59B6" stroke-width="2"/>
-              <text x="95" y="310" font-size="16" font-weight="bold" fill="#9B59B6">θ</text>
-              
-              <!-- Legend box -->
-              <rect x="250" y="20" width="130" height="70" fill="rgba(255,255,255,0.9)" stroke="#CCC" stroke-width="1" rx="5"/>
-              <text x="260" y="40" font-size="13" font-weight="bold" fill="#333">The Three Sides:</text>
-              <text x="260" y="60" font-size="11" fill="#E74C3C">• H = Hypotenuse</text>
-              <text x="260" y="75" font-size="11" fill="#27AE60">• O = Opposite</text>
-              <text x="260" y="90" font-size="11" fill="#F39C12">• A = Adjacent</text>
+          <div class="animation-container">
+            <!-- Animation Canvas -->
+            <svg id="triangle-animation" class="triangle-animation" viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+              <!-- Will be animated by JavaScript -->
             </svg>
 
-            <!-- Text explanation -->
-            <div class="components-list">
-              <div class="component-item">
-                <span class="component-label" style="color: #E74C3C;">Hypotenuse (H)</span>
-                <p class="component-desc" data-i18n="hypotenuseDesc">The longest side, opposite the right angle</p>
+            <!-- Legend -->
+            <div class="animation-legend">
+              <div class="legend-item">
+                <span class="legend-color" style="background: #E74C3C;"></span>
+                <span data-i18n="hypotenuse">Hypotenuse (H)</span>
               </div>
-              <div class="component-item">
-                <span class="component-label" style="color: #27AE60;">Opposite (O)</span>
-                <p class="component-desc" data-i18n="oppositeDesc">The side opposite to the angle θ we're studying</p>
+              <div class="legend-item">
+                <span class="legend-color" style="background: #27AE60;"></span>
+                <span data-i18n="opposite">Opposite (O)</span>
               </div>
-              <div class="component-item">
-                <span class="component-label" style="color: #F39C12;">Adjacent (A)</span>
-                <p class="component-desc" data-i18n="adjacentDesc">The side next to the angle θ (not the hypotenuse)</p>
+              <div class="legend-item">
+                <span class="legend-color" style="background: #F39C12;"></span>
+                <span data-i18n="adjacent">Adjacent (A)</span>
               </div>
             </div>
+          </div>
+
+          <!-- Animation Controls -->
+          <div class="animation-controls">
+            <button id="play-animation-btn" class="animation-btn" data-i18n="playAnimation">▶ Play Animation</button>
+            <button id="reset-animation-btn" class="animation-btn" data-i18n="resetAnimation">↻ Reset</button>
           </div>
         </div>
       </section>
 
-      <!-- ============ SLIDE 5: The Six Ratios ============ -->
-      <section class="slide" id="slide-5">
+      <!-- ============ SLIDE 5: The Six Ratios (NOT YET) ============ -->
+      <section class="slide" id="slide-5" style="display: flex; align-items: center; justify-content: center;">
         <div class="slide-content">
-          <h2 class="slide-heading" data-i18n="slide5Title">🔗 The Six Trigonometric Ratios</h2>
-          
-          <p class="slide-text" data-i18n="slide5Text">
-            No matter how big or small the triangle is, if you fix one angle θ, these six ratios are always the same!
-          </p>
-
-          <!-- Interactive Ratios Reveal -->
-          <div class="ratios-container" id="ratios-container">
-            <!-- Each ratio will be revealed one-by-one -->
-          </div>
-
-          <!-- Interactive Triangle on the Right -->
-          <div class="ratio-demo-section">
-            <div class="ratio-triangle-control">
-              <h3 data-i18n="tryItOut">Try It Out:</h3>
-              
-              <!-- Angle Control -->
-              <div class="control-group">
-                <label data-i18n="angleLabel">Angle θ:</label>
-                <div class="angle-input-group">
-                  <input type="range" id="angle-slider" min="5" max="85" value="30" class="angle-slider">
-                  <input type="number" id="angle-input" min="5" max="85" value="30" class="angle-number">
-                  <span class="angle-unit">°</span>
-                </div>
-              </div>
-
-              <!-- Triangle Visualization -->
-              <svg id="interactive-triangle" class="interactive-triangle" viewBox="0 0 300 250" xmlns="http://www.w3.org/2000/svg">
-                <!-- Triangle and values rendered by JavaScript -->
-              </svg>
-
-              <!-- Ratio Values Display -->
-              <div class="ratio-values-display" id="ratio-values-display">
-                <!-- Will be populated by JavaScript -->
-              </div>
-            </div>
-          </div>
+          <h2 class="slide-heading" style="text-align: center;">🎯 Coming Soon...</h2>
+          <p class="slide-text" style="text-align: center;">Slide 5 & onwards will be improved after Slide 4 is perfected</p>
         </div>
       </section>
 
-      <!-- ============ SLIDE 6: Functions (Sin/Cos/Tan/etc) ============ -->
-      <section class="slide" id="slide-6">
-        <div class="slide-content">
-          <h2 class="slide-heading" data-i18n="slide6Title">📈 Trigonometric Functions</h2>
-          
-          <p class="slide-text" data-i18n="slide6Text">
-            The six ratios define six trigonometric <strong>functions</strong> that describe how the side lengths 
-            change as the angle changes.
-          </p>
-
-          <!-- Functions List with Unit Circle -->
-          <div class="functions-section">
-            <div class="functions-list" id="functions-list">
-              <!-- Will be populated by JavaScript -->
-            </div>
-
-            <div class="unit-circle-container">
-              <h3 data-i18n="unitCircleTitle">Unit Circle</h3>
-              <svg id="unit-circle" class="unit-circle" viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg">
-                <!-- Unit circle visualization -->
-                <circle cx="125" cy="125" r="100" fill="none" stroke="#4A90E2" stroke-width="2"/>
-                <!-- Axes -->
-                <line x1="25" y1="125" x2="225" y2="125" stroke="#333" stroke-width="1"/>
-                <line x1="125" y1="25" x2="125" y2="225" stroke="#333" stroke-width="1"/>
-                <!-- Radius line (for angle demonstration) -->
-                <line id="radius-line" x1="125" y1="125" x2="195" y2="80" stroke="#E74C3C" stroke-width="2"/>
-                <!-- Point on circle -->
-                <circle id="circle-point" cx="195" cy="80" r="3" fill="#E74C3C"/>
-              </svg>
-            </div>
-          </div>
-
-          <div class="info-box">
-            <p data-i18n="slide6InfoText">
-              These functions are fundamental in physics, engineering, and advanced mathematics. 
-              They describe cyclic patterns in nature: waves, oscillations, and circular motion!
-            </p>
-          </div>
-        </div>
+      <!-- Placeholder Slides 6-7 -->
+      <section class="slide" id="slide-6" style="display: flex; align-items: center; justify-content: center;">
+        <div class="slide-content"><h2 class="slide-heading" style="text-align: center;">📈 Slide 6</h2></div>
       </section>
-
-      <!-- ============ SLIDE 7: Quiz ============ -->
-      <section class="slide" id="slide-7">
-        <div class="slide-content">
-          <h2 class="slide-heading" data-i18n="slide7Title">❓ Quiz: Test Your Understanding</h2>
-          
-          <div class="quiz-container" id="quiz-container">
-            <!-- Quiz questions will be generated by JavaScript -->
-          </div>
-
-          <!-- Quiz Results -->
-          <div class="quiz-results" id="quiz-results" style="display: none;">
-            <div class="results-header">
-              <h3 data-i18n="quizComplete">Quiz Complete!</h3>
-              <p class="score-display" id="score-display">Score: 0 / 0</p>
-            </div>
-            <button class="restart-btn" onclick="location.reload()" data-i18n="restartBtn">
-              Restart
-            </button>
-          </div>
-        </div>
+      <section class="slide" id="slide-7" style="display: flex; align-items: center; justify-content: center;">
+        <div class="slide-content"><h2 class="slide-heading" style="text-align: center;">❓ Slide 7</h2></div>
       </section>
 
     </main>
@@ -362,7 +247,6 @@
     </footer>
   </div>
 
-  <!-- Scripts -->
   <script src="game.js"></script>
 </body>
 </html>
