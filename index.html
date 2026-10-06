@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EduQuest MY - Malaysian Educational Game Portal</title>
+  <title>EduQuest MY - Malaysian Educational Portal & Exam Arcade</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -14,10 +14,10 @@
   <header class="navbar">
     <div class="nav-container">
       <div class="logo">
-        <span class="logo-icon">🎮</span>
+        <span class="logo-icon">🎮📚</span>
         <div class="logo-text">
           <h1>EduQuest <span class="highlight">MY</span></h1>
-          <p class="tagline" data-i18n="tagline">Malaysian Interactive Learning Portal</p>
+          <p class="tagline" data-i18n="tagline">Malaysian Interactive Study Notes & Exam Games Portal</p>
         </div>
       </div>
 
@@ -43,15 +43,26 @@
   <section class="hero">
     <div class="hero-content">
       <span class="badge" data-i18n="heroBadge">✨ KSSR & KSSM Aligned</span>
-      <h2 data-i18n="heroTitle">Learn Math, Science & History Through Arcade Gaming!</h2>
-      <p data-i18n="heroDesc">Engaging STEM and humanities games specially created for Malaysian primary and secondary students.</p>
+      <h2 data-i18n="heroTitle">Study the Notes, Then Master the Exam Games!</h2>
+      <p data-i18n="heroDesc">Structured revision notes and gamified exam simulations for Malaysian primary and secondary students.</p>
     </div>
   </section>
 
   <!-- Main Content Container -->
   <main class="main-container">
-    <!-- Filter Toolbar -->
+    <!-- Structured Filter Toolbar (Category, Subject, Level) -->
     <section class="filter-section">
+      <!-- 1. Category Filter (Study Notes vs Exam Games) -->
+      <div class="filter-group">
+        <span class="filter-label" data-i18n="categoryLabel">Category:</span>
+        <div class="tabs" id="category-tabs">
+          <button class="tab-btn active" data-category="all" data-i18n="catAll">All Categories</button>
+          <button class="tab-btn" data-category="notes" data-i18n="catNotes">📚 Study Notes</button>
+          <button class="tab-btn" data-category="games" data-i18n="catGames">🎮 Exam Games</button>
+        </div>
+      </div>
+
+      <!-- 2. Subject Filter -->
       <div class="filter-group">
         <span class="filter-label" data-i18n="subjectLabel">Subject:</span>
         <div class="tabs" id="subject-tabs">
@@ -62,6 +73,7 @@
         </div>
       </div>
 
+      <!-- 3. Level Filter -->
       <div class="filter-group">
         <span class="filter-label" data-i18n="levelLabel">Level:</span>
         <div class="tabs" id="level-tabs">
@@ -72,14 +84,114 @@
       </div>
     </section>
 
-    <!-- Game Cards Grid -->
-    <section class="game-grid" id="game-grid">
+    <!-- Unified Cards Grid (Notes & Games) -->
+    <section class="card-grid" id="portal-grid">
+
+      <!-- ==================== STUDY NOTES CATEGORY ==================== -->
+      
+      <!-- Note Card 1: Trigonometry Revision Notes -->
+      <article class="portal-card note-card" data-category="notes" data-subject="math" data-level="secondary">
+        <div class="card-media note-bg">
+          <div class="card-badge secondary" data-i18n="tagSecondary">Secondary</div>
+          <div class="card-badge note-tag" data-i18n="tagStudyNote">📚 Study Note</div>
+          <div class="preview-icon">📐📖</div>
+        </div>
+        <div class="card-content">
+          <h3 data-i18n="note1Title">Trigonometry & Right Triangles (SOH CAH TOA)</h3>
+          <p class="card-desc" data-i18n="note1Desc">Master right-angled triangle ratios, Pythagoras theorem, and calculating missing sides and angles θ.</p>
+          <div class="note-summary">
+            <ul>
+              <li><strong>SOH:</strong> Sin(θ) = Opposite / Hypotenuse</li>
+              <li><strong>CAH:</strong> Cos(θ) = Adjacent / Hypotenuse</li>
+              <li><strong>TOA:</strong> Tan(θ) = Opposite / Adjacent</li>
+            </ul>
+          </div>
+          <div class="card-meta">
+            <span>🎯 Form 3 - Form 5 KSSM</span>
+            <span>⏱️ 5 Min Read</span>
+          </div>
+          <button class="play-btn cta-exam-btn" onclick="openGameModal('games/math-trigo-wall/index.html', 'Trigonometry: Hole in the Wall')">
+            <span>🎮</span> <span data-i18n="testExamBtn">Take Exam Game ▶</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- Note Card 2: SPM Physics Projectile Motion Notes -->
+      <article class="portal-card note-card" data-category="notes" data-subject="science" data-level="secondary">
+        <div class="card-media note-bg">
+          <div class="card-badge secondary" data-i18n="tagSecondary">Secondary</div>
+          <div class="card-badge note-tag" data-i18n="tagStudyNote">📚 Study Note</div>
+          <div class="preview-icon">🧪📖</div>
+        </div>
+        <div class="card-content">
+          <h3 data-i18n="note2Title">SPM Physics: Projectile Motion (g = 9.8 ms⁻²)</h3>
+          <p class="card-desc" data-i18n="note2Desc">Comprehensive guide to 2D trajectory kinematics, velocity resolution, maximum height, and time of flight.</p>
+          <div class="note-summary">
+            <ul>
+              <li><strong>Max Height:</strong> Hₘₐₓ = (u · sin θ)² / (2g)</li>
+              <li><strong>Flight Time:</strong> T = 2 · u · sin θ / g</li>
+              <li><strong>Range:</strong> R = u² · sin(2θ) / g</li>
+            </ul>
+          </div>
+          <div class="card-meta">
+            <span>🎯 Form 4 - Form 5 KSSM Physics</span>
+            <span>⏱️ 7 Min Read</span>
+          </div>
+          <button class="play-btn cta-exam-btn" onclick="openGameModal('games/physics-cat-dog/index.html', 'Physics: Cat vs Dog - Projectile Battle')">
+            <span>🎮</span> <span data-i18n="testExamBtn">Take Exam Game ▶</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- Note Card 3: Primary Science Photosynthesis (Preview Note) -->
+      <article class="portal-card note-card coming-soon" data-category="notes" data-subject="science" data-level="primary">
+        <div class="card-media note-bg">
+          <div class="card-badge primary" data-i18n="tagPrimary">Primary</div>
+          <div class="card-badge note-tag" data-i18n="tagStudyNote">📚 Study Note</div>
+          <div class="preview-icon">🌱📖</div>
+        </div>
+        <div class="card-content">
+          <h3 data-i18n="note3Title">KSSR Science: Plant Photosynthesis</h3>
+          <p class="card-desc" data-i18n="note3Desc">Learn how chlorophyll, sunlight, carbon dioxide, and water convert into glucose and oxygen.</p>
+          <div class="card-meta">
+            <span>🎯 Year 4 - Year 6 KSSR</span>
+            <span>🔒 <span data-i18n="comingSoon">Coming Soon</span></span>
+          </div>
+          <button class="play-btn disabled" disabled>
+            <span data-i18n="locked">Locked</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- Note Card 4: Form 1-3 History Melaka Sultanate (Preview Note) -->
+      <article class="portal-card note-card coming-soon" data-category="notes" data-subject="history" data-level="secondary">
+        <div class="card-media note-bg">
+          <div class="card-badge secondary" data-i18n="tagSecondary">Secondary</div>
+          <div class="card-badge note-tag" data-i18n="tagStudyNote">📚 Study Note</div>
+          <div class="preview-icon">🏛️📖</div>
+        </div>
+        <div class="card-content">
+          <h3 data-i18n="note4Title">KSSM Sejarah: Kesultanan Melayu Melaka</h3>
+          <p class="card-desc" data-i18n="note4Desc">Discover the golden age of 15th-century Melaka maritime trade, diplomatic ties, and legal codes.</p>
+          <div class="card-meta">
+            <span>🎯 Form 1 - Form 3 KSSM</span>
+            <span>🔒 <span data-i18n="comingSoon">Coming Soon</span></span>
+          </div>
+          <button class="play-btn disabled" disabled>
+            <span data-i18n="locked">Locked</span>
+          </button>
+        </div>
+      </article>
+
+
+      <!-- ==================== EXAM GAMES CATEGORY ==================== -->
+
       <!-- Game Card 1: Trigonometry Hole in the Wall (ACTIVE) -->
-      <article class="game-card" data-subject="math" data-level="secondary">
+      <article class="portal-card game-card" data-category="games" data-subject="math" data-level="secondary">
         <div class="card-media trigo-bg">
           <div class="card-badge secondary" data-i18n="tagSecondary">Secondary</div>
-          <div class="card-badge math" data-i18n="tagMath">Mathematics</div>
-          <div class="game-preview-icon">📐🧱</div>
+          <div class="card-badge game-tag" data-i18n="tagExamGame">🎮 Exam Game</div>
+          <div class="preview-icon">📐🧱</div>
         </div>
         <div class="card-content">
           <h3 data-i18n="game1Title">Trigonometry: Hole in the Wall</h3>
@@ -89,17 +201,17 @@
             <span>⭐ <span data-i18n="diffMedium">Medium</span></span>
           </div>
           <button class="play-btn" onclick="openGameModal('games/math-trigo-wall/index.html', 'Trigonometry: Hole in the Wall')">
-            <span>▶</span> <span data-i18n="playButton">Play Game</span>
+            <span>▶</span> <span data-i18n="playButton">Play Exam Game</span>
           </button>
         </div>
       </article>
 
-      <!-- Game Card 4: Physics Cat vs Dog Projectile Battle (ACTIVE) -->
-      <article class="game-card" data-subject="science" data-level="secondary">
+      <!-- Game Card 2: Physics Cat vs Dog Projectile Battle (ACTIVE) -->
+      <article class="portal-card game-card" data-category="games" data-subject="science" data-level="secondary">
         <div class="card-media science-bg">
           <div class="card-badge secondary" data-i18n="tagSecondary">Secondary</div>
-          <div class="card-badge science" data-i18n="tagScience">Physics</div>
-          <div class="game-preview-icon">🐱🚀🐶</div>
+          <div class="card-badge game-tag" data-i18n="tagExamGame">🎮 Exam Game</div>
+          <div class="preview-icon">🐱🚀🐶</div>
         </div>
         <div class="card-content">
           <h3 data-i18n="game4Title">Physics: Cat vs Dog (Projectile Battle)</h3>
@@ -109,17 +221,17 @@
             <span>🔥 1P vs AI / 2P Battle</span>
           </div>
           <button class="play-btn" onclick="openGameModal('games/physics-cat-dog/index.html', 'Physics: Cat vs Dog - Projectile Battle')">
-            <span>▶</span> <span data-i18n="playButton">Play Game</span>
+            <span>▶</span> <span data-i18n="playButton">Play Exam Game</span>
           </button>
         </div>
       </article>
 
-      <!-- Game Card 2: Science Lab - Photosynthesis Rush (COMING SOON) -->
-      <article class="game-card coming-soon" data-subject="science" data-level="primary">
+      <!-- Game Card 3: Science Lab - Photosynthesis Rush (COMING SOON) -->
+      <article class="portal-card game-card coming-soon" data-category="games" data-subject="science" data-level="primary">
         <div class="card-media science-bg">
           <div class="card-badge primary" data-i18n="tagPrimary">Primary</div>
-          <div class="card-badge science" data-i18n="tagScience">Science</div>
-          <div class="game-preview-icon">🌱☀️</div>
+          <div class="card-badge game-tag" data-i18n="tagExamGame">🎮 Exam Game</div>
+          <div class="preview-icon">🌱☀️</div>
         </div>
         <div class="card-content">
           <h3 data-i18n="game2Title">Photosynthesis Rush</h3>
@@ -134,12 +246,12 @@
         </div>
       </article>
 
-      <!-- Game Card 3: Sejarah Time Travel (COMING SOON) -->
-      <article class="game-card coming-soon" data-subject="history" data-level="secondary">
+      <!-- Game Card 4: Sejarah Time Travel (COMING SOON) -->
+      <article class="portal-card game-card coming-soon" data-category="games" data-subject="history" data-level="secondary">
         <div class="card-media history-bg">
           <div class="card-badge secondary" data-i18n="tagSecondary">Secondary</div>
-          <div class="card-badge history" data-i18n="tagHistory">History</div>
-          <div class="game-preview-icon">🏛️📜</div>
+          <div class="card-badge game-tag" data-i18n="tagExamGame">🎮 Exam Game</div>
+          <div class="preview-icon">🏛️📜</div>
         </div>
         <div class="card-content">
           <h3 data-i18n="game3Title">Melaka Sultanate Quest</h3>
@@ -153,6 +265,7 @@
           </button>
         </div>
       </article>
+
     </section>
   </main>
 
@@ -178,7 +291,7 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <p>© 2026 EduQuest MY • Empowering Malaysian Students with Interactive STEM Games</p>
+    <p>© 2026 EduQuest MY • Empowering Malaysian Students with Interactive Study Notes & Exam Games</p>
   </footer>
 
   <script src="portal.js"></script>

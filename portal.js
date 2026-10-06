@@ -1,22 +1,27 @@
 /**
- * EduQuest MY - Portal Logic & i18n Translation Engine
+ * EduQuest MY - Portal Logic & i18n Translation Engine (Structured Categories, Notes & Exam Games)
  */
 
 // Current application state (Default Language: English)
 let currentLanguage = 'en';
+let activeCategory = 'all';
 let activeSubject = 'all';
 let activeLevel = 'all';
 
 // i18n Translation Dictionary (BM, EN, CN)
 const translations = {
   bm: {
-    tagline: "Portal Pembelajaran Interaktif Malaysia",
+    tagline: "Portal Nota Pembelajaran Interaktif & Permainan Ujian Malaysia",
     selectLanguage: "Bahasa:",
     heroBadge: "✨ Selaras KSSR & KSSM",
-    heroTitle: "Belajar Matematik, Sains & Sejarah Melalui Permainan Arked!",
-    heroDesc: "Permainan STEM dan kemanusiaan menarik khas untuk murid sekolah rendah dan menengah Malaysia.",
+    heroTitle: "Buka Nota Ulang Kaji, Kemudian Kuasai Permainan Ujian!",
+    heroDesc: "Nota ringkas berstruktur dan simulasi ujian berunsur permainan khas untuk murid sekolah rendah dan menengah Malaysia.",
+    categoryLabel: "Kategori:",
     subjectLabel: "Subjek:",
     levelLabel: "Tahap:",
+    catAll: "Semua Kategori",
+    catNotes: "📚 Nota Ulang Kaji",
+    catGames: "🎮 Permainan Ujian",
     allSubjects: "Semua Subjek",
     subjectMath: "Matematik",
     subjectScience: "Sains / Fizik",
@@ -29,28 +34,39 @@ const translations = {
     tagMath: "Matematik",
     tagScience: "Fizik",
     tagHistory: "Sejarah",
+    tagStudyNote: "📚 Nota Ulang Kaji",
+    tagExamGame: "🎮 Permainan Ujian",
     diffMedium: "Sederhana",
     comingSoon: "Akan Datang",
-    playButton: "Main Permainan",
+    playButton: "Main Permainan Ujian",
+    testExamBtn: "Uji Ilmu Dalam Permainan ▶",
     locked: "Kunci",
     exitGame: "Keluar Permainan",
+    note1Title: "Trigonometri & Segi Tiga Bersudut Tegak (SOH CAH TOA)",
+    note1Desc: "Kuasai nisbah segi tiga bersudut tegak, teorem Pythagoras, dan cara menghitung panjang sisi dan sudut θ.",
+    note2Title: "Fizik SPM: Gerakan Projektil (g = 9.8 ms⁻²)",
+    note2Desc: "Panduan lengkap kinematik 2D, leraian vektor halaju, tinggi maksimum, dan masa penerbangan.",
+    note3Title: "Sains KSSR: Fotosintesis Tumbuhan",
+    note3Desc: "Pelajari bagaimana klorofil, cahaya matahari, karbon dioksida, dan air bertukar menjadi glukosa dan oksigen.",
+    note4Title: "Sejarah KSSM: Kesultanan Melayu Melaka",
+    note4Desc: "Terokai zaman kegemilangan perdagangan maritim Melaka abad ke-15 dan perundangan Melaka.",
     game1Title: "Trigonometri: Lubang Dinding",
     game1Desc: "Hitung panjang sisi atau sudut segi tiga bersudut tegak (SOH CAH TOA) sebelum dinding bergerak melanggar anda!",
     game4Title: "Fizik: Kucing vs Anjing (Pertempuran Projektil)",
-    game4Desc: "Selesaikan pengiraan gerakan projektil Fizik SPM (g=9.8 ms⁻²) untuk melancarkan tembakan tepat!",
-    game2Title: "Makmal Sains: Fotosintesis Rush",
-    game2Desc: "Imbangkan cahaya matahari, air, dan karbon dioksida untuk membantu tumbuhan berkembang!",
-    game3Title: "Pengembaraan Kesultanan Melayu Melaka",
-    game3Desc: "Jelajahi laluan perdagangan Melaka abad ke-15 dan uji pengetahuan sejarah anda."
+    game4Desc: "Selesaikan pengiraan gerakan projektil Fizik SPM (g=9.8 ms⁻²) untuk melancarkan tembakan tepat!"
   },
   en: {
-    tagline: "Malaysian Interactive Learning Portal",
+    tagline: "Malaysian Interactive Study Notes & Exam Games Portal",
     selectLanguage: "Language:",
     heroBadge: "✨ KSSR & KSSM Aligned",
-    heroTitle: "Learn Math, Science & History Through Arcade Gaming!",
-    heroDesc: "Engaging STEM and humanities games specially created for Malaysian primary and secondary students.",
+    heroTitle: "Study the Notes, Then Master the Exam Games!",
+    heroDesc: "Structured revision notes and gamified exam simulations for Malaysian primary and secondary students.",
+    categoryLabel: "Category:",
     subjectLabel: "Subject:",
     levelLabel: "Level:",
+    catAll: "All Categories",
+    catNotes: "📚 Study Notes",
+    catGames: "🎮 Exam Games",
     allSubjects: "All Subjects",
     subjectMath: "Mathematics",
     subjectScience: "Science / Physics",
@@ -63,28 +79,39 @@ const translations = {
     tagMath: "Mathematics",
     tagScience: "Physics",
     tagHistory: "History",
+    tagStudyNote: "📚 Study Note",
+    tagExamGame: "🎮 Exam Game",
     diffMedium: "Medium",
     comingSoon: "Coming Soon",
-    playButton: "Play Game",
+    playButton: "Play Exam Game",
+    testExamBtn: "Take Exam Game ▶",
     locked: "Locked",
     exitGame: "Exit / Key Out",
+    note1Title: "Trigonometry & Right Triangles (SOH CAH TOA)",
+    note1Desc: "Master right-angled triangle ratios, Pythagoras theorem, and calculating missing sides and angles θ.",
+    note2Title: "SPM Physics: Projectile Motion (g = 9.8 ms⁻²)",
+    note2Desc: "Comprehensive guide to 2D trajectory kinematics, velocity resolution, maximum height, and time of flight.",
+    note3Title: "KSSR Science: Plant Photosynthesis",
+    note3Desc: "Learn how chlorophyll, sunlight, carbon dioxide, and water convert into glucose and oxygen.",
+    note4Title: "KSSM Sejarah: Kesultanan Melayu Melaka",
+    note4Desc: "Discover the golden age of 15th-century Melaka maritime trade, diplomatic ties, and legal codes.",
     game1Title: "Trigonometry: Hole in the Wall",
     game1Desc: "Calculate missing triangle sides or angles using SOH CAH TOA before the moving wall reaches you!",
     game4Title: "Physics: Cat vs Dog (Projectile Battle)",
-    game4Desc: "Solve SPM Physics projectile motion calculations (g=9.8 ms⁻²) to launch accurate trajectory shots!",
-    game2Title: "Science Lab: Photosynthesis Rush",
-    game2Desc: "Balance sunlight, water, and carbon dioxide to help plants thrive in the tropical rainforest!",
-    game3Title: "Melaka Sultanate Quest",
-    game3Desc: "Journey through 15th-century Melaka trade routes and test your knowledge of Malaysian heritage."
+    game4Desc: "Solve SPM Physics projectile motion calculations (g=9.8 ms⁻²) to launch accurate trajectory shots!"
   },
   cn: {
-    tagline: "马来西亚互动学习游戏门户",
+    tagline: "马来西亚互动学习笔记与考试游戏门户",
     selectLanguage: "语言选择:",
     heroBadge: "✨ 符合 KSSR & KSSM 课程标准",
-    heroTitle: "通过街机游戏轻松学习数学、科学与历史！",
-    heroDesc: "专为马来西亚中小学生设计的趣味 STEM 与人文类互动游戏 portal。",
+    heroTitle: "先温习知识笔记，再挑战考试游戏！",
+    heroDesc: "专为马来西亚中小学生打造的结构化复习笔记与关卡式考试游戏。",
+    categoryLabel: "资源分类:",
     subjectLabel: "科目分类:",
     levelLabel: "学习阶段:",
+    catAll: "全部资源",
+    catNotes: "📚 学习笔记",
+    catGames: "🎮 考试与游戏",
     allSubjects: "所有科目",
     subjectMath: "数学 (Matematik)",
     subjectScience: "科学 / 物理 (Fizik)",
@@ -97,19 +124,26 @@ const translations = {
     tagMath: "数学",
     tagScience: "物理",
     tagHistory: "历史",
+    tagStudyNote: "📚 学习笔记",
+    tagExamGame: "🎮 考试游戏",
     diffMedium: "中等难度",
     comingSoon: "即将推出",
-    playButton: "开始游戏",
+    playButton: "开始考试游戏",
+    testExamBtn: "进入考试游戏 ▶",
     locked: "未解锁",
     exitGame: "退出游戏",
+    note1Title: "三角函数与直角三角形 (SOH CAH TOA)",
+    note1Desc: "掌握直角三角形边长比、勾股定理以及计算未知边长与角度 θ。",
+    note2Title: "SPM 物理：斜抛与平抛运动 (g = 9.8 ms⁻²)",
+    note2Desc: "平抛 kinematics 运动学、初速度分解、最大高度 Hₘₐₓ 与飞行时间 T 详解。",
+    note3Title: "KSSR 科学：植物的光合作用",
+    note3Desc: "学习叶绿素、阳光、二氧化碳和水如何转化为葡萄糖和氧气。",
+    note4Title: "KSSM 历史：马六甲王朝的辉煌",
+    note4Desc: "探索15世纪马六甲海上贸易枢纽、外交关系与马六甲法典。",
     game1Title: "三角函数：墙缝穿行 (Trigonometry Wall)",
     game1Desc: "在移动的墙壁靠近前，运用 SOH CAH TOA 计算直角三角形缺少的边长或角度！",
     game4Title: "物理：猫狗大作战 (平抛与斜抛运动)",
-    game4Desc: "解答 SPM 物理斜抛运动公式 (g=9.8 ms⁻²)，发射精准炮弹击败对手！",
-    game2Title: "科学实验室：光合作用冲刺",
-    game2Desc: "平衡阳光、水分与二氧化碳，帮助热带雨林中的植物健康生长！",
-    game3Title: "马六甲王朝历史大冒险",
-    game3Desc: "穿越回15世纪马六甲贸易枢纽，挑战你的马来西亚历史知识储备。"
+    game4Desc: "解答 SPM 物理斜抛运动公式 (g=9.8 ms⁻²)，发射精准炮弹击败对手！"
   }
 };
 
@@ -127,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initLanguageSwitcher() {
   const langButtons = document.querySelectorAll('.lang-btn');
   langButtons.forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', () => {
       const selectedLang = btn.dataset.lang;
       if (selectedLang && selectedLang !== currentLanguage) {
         langButtons.forEach(b => b.classList.remove('active'));
@@ -157,18 +191,28 @@ function updateLanguage(langKey) {
 }
 
 /**
- * Initialize Subject and Level Tabs Filtering
+ * Initialize Category, Subject and Level Tabs Filtering
  */
 function initFilters() {
+  const categoryTabs = document.querySelectorAll('#category-tabs .tab-btn');
   const subjectTabs = document.querySelectorAll('#subject-tabs .tab-btn');
   const levelTabs = document.querySelectorAll('#level-tabs .tab-btn');
+
+  categoryTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      categoryTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      activeCategory = tab.dataset.category;
+      filterPortalCards();
+    });
+  });
 
   subjectTabs.forEach(tab => {
     tab.addEventListener('click', () => {
       subjectTabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       activeSubject = tab.dataset.subject;
-      filterGameCards();
+      filterPortalCards();
     });
   });
 
@@ -177,24 +221,26 @@ function initFilters() {
       levelTabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       activeLevel = tab.dataset.level;
-      filterGameCards();
+      filterPortalCards();
     });
   });
 }
 
 /**
- * Filter Game Cards visibility based on Subject & Level
+ * Filter Portal Cards visibility based on Category, Subject & Level
  */
-function filterGameCards() {
-  const cards = document.querySelectorAll('.game-card');
+function filterPortalCards() {
+  const cards = document.querySelectorAll('.portal-card');
   cards.forEach(card => {
+    const cardCategory = card.dataset.category;
     const cardSubject = card.dataset.subject;
     const cardLevel = card.dataset.level;
 
+    const matchCategory = activeCategory === 'all' || cardCategory === activeCategory;
     const matchSubject = activeSubject === 'all' || cardSubject === activeSubject;
     const matchLevel = activeLevel === 'all' || cardLevel === activeLevel;
 
-    if (matchSubject && matchLevel) {
+    if (matchCategory && matchSubject && matchLevel) {
       card.classList.remove('hidden');
     } else {
       card.classList.add('hidden');
@@ -217,7 +263,6 @@ function openGameModal(gamePath, titleOverride) {
   modal.classList.add('active');
   modal.setAttribute('aria-hidden', 'false');
   
-  // Set modal title based on parameters or translation
   if (titleOverride) {
     modalTitle.textContent = titleOverride;
   } else if (translations[currentLanguage]) {
@@ -231,7 +276,6 @@ function closeGameModal() {
   
   modal.classList.remove('active');
   modal.setAttribute('aria-hidden', 'true');
-  // Reset iframe src to stop background audio/game loop
   iframe.src = 'about:blank';
 }
 
