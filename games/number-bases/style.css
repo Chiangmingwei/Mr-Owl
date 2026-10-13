@@ -1,0 +1,96 @@
+:root{
+  --primary-color:#4A90E2;--primary-dark:#2E5C8A;--accent-color:#E74C3C;--accent-light:#F39C12;
+  --success-color:#27AE60;--bg-primary:#0F1419;--bg-secondary:#1A202C;--bg-tertiary:#2D3748;
+  --text-primary:#FFFFFF;--text-secondary:#A0AEC0;--glass-bg:rgba(255,255,255,0.05);
+  --glass-blur:10px;--glass-border:rgba(255,255,255,0.1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;width:100%;overflow:hidden;}
+body{background:linear-gradient(135deg,#0F1419 0%,#1A202C 100%);color:var(--text-primary);
+  font-family:"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;}
+.mono{font-family:"Share Tech Mono",monospace;}
+
+.slide-container{display:flex;flex-direction:column;width:100vw;height:100vh;}
+.slide-header{background:var(--glass-bg);backdrop-filter:blur(var(--glass-blur));
+  border-bottom:1px solid var(--glass-border);padding:1rem 2rem;display:flex;
+  justify-content:space-between;align-items:center;flex-shrink:0;height:70px;}
+.slide-title{font-size:1.3rem;font-weight:700;background:linear-gradient(135deg,#4A90E2 0%,#E74C3C 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.progress-info{font-size:0.85rem;color:var(--text-secondary);}
+
+.slides-wrapper{flex:1;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.slide{display:none;width:100%;height:100%;}
+.slide.active{display:flex;}
+.slide-content{background:var(--glass-bg);backdrop-filter:blur(var(--glass-blur));
+  border:1px solid var(--glass-border);border-radius:12px;padding:2rem;width:95%;height:95%;
+  max-width:1400px;max-height:800px;overflow-y:auto;display:flex;flex-direction:column;}
+.slide-heading{font-size:1.5rem;font-weight:700;margin-bottom:1rem;}
+.slide-text{font-size:0.95rem;line-height:1.6;color:var(--text-secondary);margin-bottom:0.8rem;}
+.slide-text.small-text{font-size:0.88rem;}
+.mini-heading{font-size:1.05rem;font-weight:700;margin-bottom:0.8rem;color:var(--text-primary);}
+
+.slide-row{display:grid;grid-template-columns:1fr 1fr;gap:2rem;flex:1;}
+.slide-col{display:flex;flex-direction:column;gap:0.8rem;overflow-y:auto;}
+
+/* ===== ODOMETER ===== */
+.odo-controls{display:flex;gap:0.8rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap;}
+.odometer-display{display:flex;gap:0.4rem;justify-content:center;margin:1rem 0;}
+.odo-plate{width:50px;height:70px;background:var(--bg-tertiary);border:2px solid var(--primary-color);
+  border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;
+  font-weight:700;font-family:"Share Tech Mono",monospace;color:var(--accent-light);
+  transition:transform 0.2s ease;}
+.odo-plate.flipping{transform:rotateX(360deg);background:var(--primary-color);color:white;}
+.odo-readout{text-align:center;font-size:1rem;color:var(--text-secondary);margin-top:0.5rem;}
+
+/* ===== BUTTONS ===== */
+.animation-btn,.toggle-btn{padding:0.6rem 1.3rem;background:linear-gradient(135deg,rgba(74,144,226,0.2) 0%,rgba(74,144,226,0.05) 100%);
+  border:1px solid var(--glass-border);color:var(--text-primary);border-radius:6px;cursor:pointer;
+  font-weight:600;font-size:0.88rem;transition:all 0.3s ease;align-self:flex-start;}
+.animation-btn:hover,.toggle-btn:hover{background:linear-gradient(135deg,rgba(74,144,226,0.4) 0%,rgba(74,144,226,0.2) 100%);
+  border-color:var(--primary-color);}
+.toggle-btn{background:linear-gradient(135deg,rgba(243,156,18,0.2) 0%,rgba(243,156,18,0.05) 100%);}
+
+/* ===== INPUTS ===== */
+.num-input{padding:0.6rem 0.9rem;background:var(--bg-tertiary);border:1px solid var(--glass-border);
+  border-radius:6px;color:var(--text-primary);font-size:0.95rem;font-family:"Share Tech Mono",monospace;width:100%;max-width:250px;}
+select.num-input{font-family:inherit;}
+label{font-size:0.88rem;color:var(--text-secondary);display:flex;flex-direction:column;gap:0.3rem;}
+
+/* ===== PLACE VALUE TABLE ===== */
+.place-table{border-collapse:collapse;margin:0.6rem 0;}
+.place-table td,.place-table th{border:1px solid var(--glass-border);padding:0.5rem 0.8rem;
+  text-align:center;font-family:"Share Tech Mono",monospace;font-size:0.85rem;}
+.place-table th{background:var(--bg-tertiary);color:var(--primary-color);}
+.expansion-text{color:var(--accent-light);font-size:0.85rem;line-height:1.6;}
+
+/* ===== WORKED EXAMPLES / DIVISION LADDER ===== */
+.worked-example{background:var(--bg-secondary);border-left:4px solid var(--primary-color);
+  padding:0.8rem 1rem;border-radius:6px;margin-bottom:1rem;font-family:"Share Tech Mono",monospace;
+  font-size:0.85rem;line-height:1.8;color:var(--accent-light);}
+.division-ladder{background:var(--bg-secondary);border-left:4px solid var(--accent-color);
+  padding:0.8rem 1rem;border-radius:6px;font-family:"Share Tech Mono",monospace;
+  font-size:0.85rem;line-height:1.8;color:var(--text-primary);white-space:pre;}
+.result-box{background:rgba(39,174,96,0.1);border-left:4px solid var(--success-color);
+  padding:0.8rem 1rem;border-radius:6px;margin-top:0.8rem;font-family:"Share Tech Mono",monospace;color:var(--success-color);}
+
+/* ===== QUIZ ===== */
+.quiz-box{background:var(--bg-secondary);padding:1.2rem;border-radius:8px;font-size:1.05rem;
+  margin-bottom:0.8rem;min-height:60px;display:flex;align-items:center;}
+.quiz-feedback{margin-top:0.6rem;font-weight:600;}
+.quiz-feedback.correct{color:var(--success-color);}
+.quiz-feedback.incorrect{color:var(--accent-color);}
+.score-text{margin-top:0.8rem;color:var(--text-secondary);font-size:0.9rem;}
+
+/* ===== NAV ===== */
+.slide-navigation{display:flex;justify-content:center;gap:1.5rem;padding:1rem;flex-shrink:0;
+  background:var(--glass-bg);border-top:1px solid var(--glass-border);height:60px;align-items:center;}
+.nav-btn{padding:0.7rem 2rem;background:linear-gradient(135deg,rgba(74,144,226,0.2) 0%,rgba(74,144,226,0.05) 100%);
+  border:1px solid var(--glass-border);color:var(--text-primary);border-radius:6px;cursor:pointer;
+  font-size:0.95rem;font-weight:600;}
+.nav-btn:hover:not(:disabled){border-color:var(--primary-color);}
+.nav-btn:disabled{opacity:0.4;cursor:not-allowed;}
+
+@media (max-width:1024px){
+  .slide-row{grid-template-columns:1fr;}
+  .slide-content{padding:1.2rem;}
+}

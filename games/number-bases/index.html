@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Number Bases: Place Value & Conversion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="slide-container">
+  <header class="slide-header">
+    <div class="header-left"><h1 class="slide-title">Number Bases: Place Value & Conversion</h1></div>
+    <div class="header-right">
+      <div class="progress-info"><span id="current-slide">1</span> / 8</div>
+    </div>
+  </header>
+
+  <main class="slides-wrapper">
+
+    <!-- ===== SLIDE 1: What is a Number Base? ===== -->
+    <section class="slide active" id="slide-1">
+      <div class="slide-content">
+        <h2 class="slide-heading">🔢 What is a Number Base?</h2>
+        <div class="slide-row">
+          <div class="slide-col">
+            <p class="slide-text">Every day you use <strong>Base 10</strong> (decimal) — 10 digits: 0-9. When a column reaches 10, it "rolls over" and carries 1 to the next column.</p>
+            <p class="slide-text">A number in <strong>any base b</strong> only uses digits from 0 to (b−1). Example: Base 5 only uses 0,1,2,3,4.</p>
+            <p class="slide-text">Think of it like a car's <strong>mileage odometer</strong> — each wheel/plate can only show digits 0 to (base−1). Once a plate completes a full cycle, it pushes the next plate by 1.</p>
+            <button class="toggle-btn" id="toggle-odo-1">🎮 Try the Odometer Model</button>
+          </div>
+          <div class="slide-col" id="odo-panel-1" style="display:none;">
+            <div class="odo-controls">
+              <label>Base: <select id="odo-base-1">
+                <option value="2">2</option><option value="5">5</option>
+                <option value="8" selected>8</option><option value="10">10</option>
+              </select></label>
+              <button id="odo-inc-1" class="animation-btn">+1</button>
+              <button id="odo-reset-1" class="animation-btn">↻ Reset</button>
+            </div>
+            <div class="odometer-display" id="odometer-1"></div>
+            <p class="odo-readout" id="odo-readout-1"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SLIDE 2: Numbers in Base 2, 5, 8 ===== -->
+    <section class="slide" id="slide-2">
+      <div class="slide-content">
+        <h2 class="slide-heading">📊 Numbers in Base 2, 5 and 8 — Place Values</h2>
+        <div class="slide-row">
+          <div class="slide-col">
+            <p class="slide-text">In base <em>b</em>, each column's place value is a power of <em>b</em>, just like base 10 uses 100s, 10s, 1s.</p>
+            <table class="place-table" id="place-table-2"></table>
+            <p class="slide-text small-text">Example (Contoh): <span class="mono">101101₂</span> means:</p>
+            <p class="mono expansion-text" id="expansion-example-2"></p>
+          </div>
+          <div class="slide-col">
+            <label>Try your own: <input type="text" id="custom-digits-2" placeholder="e.g. 101101" class="num-input"></label>
+            <label>Base: <select id="custom-base-2">
+              <option value="2" selected>2</option><option value="5">5</option><option value="8">8</option>
+            </select></label>
+            <button class="animation-btn" id="show-table-btn-2">Show Place Values</button>
+            <button class="toggle-btn" id="toggle-odo-2">🎮 Try the Odometer Model</button>
+            <div id="odo-panel-2" style="display:none;">
+              <div class="odo-controls">
+                <button id="odo-inc-2" class="animation-btn">+1</button>
+                <button id="odo-reset-2" class="animation-btn">↻ Reset</button>
+              </div>
+              <div class="odometer-display" id="odometer-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SLIDE 3: Convert Base N -> Base 10 ===== -->
+    <section class="slide" id="slide-3">
+      <div class="slide-content">
+        <h2 class="slide-heading">➡️ Converting Base <em>N</em> to Base 10 (Expansion Method)</h2>
+        <div class="slide-row">
+          <div class="slide-col">
+            <p class="slide-text">Multiply each digit by its place value, then add everything up.</p>
+            <p class="slide-text small-text"><strong>Contoh:</strong> Convert 1101₂ to base 10</p>
+            <div class="worked-example" id="worked-3a"></div>
+            <p class="slide-text small-text"><strong>Contoh:</strong> Convert 352₈ to base 10</p>
+            <div class="worked-example" id="worked-3b"></div>
+          </div>
+          <div class="slide-col">
+            <h3 class="mini-heading">Try It Yourself</h3>
+            <label>Digits: <input type="text" id="input-digits-3" placeholder="e.g. 352" class="num-input"></label>
+            <label>From base: <select id="input-base-3">
+              <option value="2">2</option><option value="5">5</option><option value="8" selected>8</option>
+            </select></label>
+            <button class="animation-btn" id="convert-btn-3">Convert to Base 10</button>
+            <div class="result-box" id="result-3"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SLIDE 4: Convert Base 10 -> Base N ===== -->
+    <section class="slide" id="slide-4">
+      <div class="slide-content">
+        <h2 class="slide-heading">⬅️ Converting Base 10 to Base <em>N</em> (Repeated Division)</h2>
+        <div class="slide-row">
+          <div class="slide-col">
+            <p class="slide-text">Divide repeatedly by the target base, keep the remainders, then read remainders bottom-to-top.</p>
+            <p class="slide-text small-text"><strong>Contoh:</strong> Convert 45 (base 10) to base 2</p>
+            <div class="division-ladder" id="ladder-4a"></div>
+          </div>
+          <div class="slide-col">
+            <h3 class="mini-heading">Try It Yourself</h3>
+            <label>Number (base 10): <input type="number" id="input-num-4" placeholder="e.g. 45" class="num-input"></label>
+            <label>To base: <select id="input-base-4">
+              <option value="2" selected>2</option><option value="5">5</option><option value="8">8</option>
+            </select></label>
+            <button class="animation-btn" id="convert-btn-4">Convert</button>
+            <div class="division-ladder" id="ladder-4b"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Placeholder slides 5-7 -->
+    <section class="slide" id="slide-5"><div class="slide-content"><h2 class="slide-heading" style="text-align:center;">🔄 Slide 5: Base A ↔ Base B (Coming Next)</h2></div></section>
+    <section class="slide" id="slide-6"><div class="slide-content"><h2 class="slide-heading" style="text-align:center;">➕ Slide 6: Addition in Base 2 (Coming Next)</h2></div></section>
+    <section class="slide" id="slide-7"><div class="slide-content"><h2 class="slide-heading" style="text-align:center;">➖ Slide 7: Subtraction in Base 2 (Coming Next)</h2></div></section>
+
+    <!-- ===== SLIDE 8: Quiz ===== -->
+    <section class="slide" id="slide-8">
+      <div class="slide-content">
+        <h2 class="slide-heading">❓ Practice Quiz (Infinite Questions)</h2>
+        <div class="slide-row">
+          <div class="slide-col">
+            <h3 class="mini-heading">Choose Topic:</h3>
+            <select id="quiz-topic" class="num-input">
+              <option value="toBase10">Convert to Base 10</option>
+              <option value="fromBase10">Convert from Base 10</option>
+            </select>
+            <button class="animation-btn" id="new-question-btn">🎲 New Question</button>
+          </div>
+          <div class="slide-col">
+            <div class="quiz-box" id="quiz-question-box">Click "New Question" to begin!</div>
+            <input type="text" id="quiz-answer-input" class="num-input" placeholder="Your answer">
+            <button class="animation-btn" id="check-answer-btn">Check Answer</button>
+            <div class="quiz-feedback" id="quiz-feedback"></div>
+            <p class="score-text" id="score-text">Score: 0 / 0</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="slide-navigation">
+    <button class="nav-btn prev-btn" id="prev-btn">← Previous</button>
+    <button class="nav-btn next-btn" id="next-btn">Next →</button>
+  </footer>
+</div>
+<script src="game.js"></script>
+</body>
+</html>
