@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initSlide2();
   initSlide3();
   initSlide4();
+  initSlide6();
+  initSlide7();
   initSlide8();
   showSlide(1);
 });
@@ -252,7 +254,15 @@ function generateQuizQuestion(){
   const bases = [2,5,8];
   const base = bases[Math.floor(Math.random()*bases.length)];
 
-  if(topic==='toBase10'){
+  if(topic==='addBase2'){
+    const x=1+Math.floor(Math.random()*7), y=1+Math.floor(Math.random()*7); // up to 3 binary digits
+    currentQuizAnswer=(x+y).toString(2);
+    box.innerHTML=`Calculate <strong>${x.toString(2)}</strong><sub>2</sub> + <strong>${y.toString(2)}</strong><sub>2</sub> (answer in base 2):`;
+  } else if(topic==='subBase2'){
+    const x=2+Math.floor(Math.random()*6), y=1+Math.floor(Math.random()*(x-1));
+    currentQuizAnswer=(x-y).toString(2);
+    box.innerHTML=`Calculate <strong>${x.toString(2)}</strong><sub>2</sub> − <strong>${y.toString(2)}</strong><sub>2</sub> (answer in base 2):`;
+  } else if(topic==='toBase10'){
     const numDigits = 2 + Math.floor(Math.random()*2); // 2-3 digits
     let digitsArr=[];
     digitsArr.push(1 + Math.floor(Math.random()*(base-1))); // leading digit non-zero
@@ -305,4 +315,126 @@ function checkQuizAnswer(){
 function subscript(n){
   const map={'0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈','9':'₉'};
   return String(n).split('').map(c=>map[c]||c).join('');
+}
+
+
+/* ===================== SLIDE 6 & 7: BINARY ADDITION / SUBTRACTION ===================== */
+const arithState = { add:{st:null, idx:0}, sub:{st:null, idx:0} };
+
+function padBits(s, n){ return s.padStart(n,'0').split('').map(Number); }
+
+function computeAddSteps(a,b){
+  const n = Math.max(a.length,b.length)+1; // +1 column so a final carry shows up
+  const A = padBits(a,n), B = padBits(b,n);
+  const steps=[]; let carry=0;
+  for(let i=n-1;i>=0;i--){
+    const sum = A[i]+B[i]+carry;
+    const digit = sum%2, cout = Math.floor(sum/2);
+    steps.push({col:i, digit, cout,
+      text:`Column ${n-i}: ${A[i]} + ${B[i]} + carry ${carry} = ${sum}  →  write ${digit}, carry ${cout}`});
+    carry = cout;
+  }
+  const result = steps.map(x=>x.digit).reverse().join('').replace(/^0+(?=.)/,'');
+  return {n, A, B, steps, result, kind:'add', opSymbol:'+'};
+}
+
+function computeSubSteps(a,b){
+  const n = Math.max(a.length,b.length);
+  const A = padBits(a,n), B = padBits(b,n);
+  const steps=[]; let borrow=0;
+  for(let i=n-1;i>=0;i--){
+    let d = A[i]-B[i]-borrow, bout = 0;
+    if(d<0){ d+=2; bout=1; }
+    const text = bout
+      ? `Column ${n-i}: ${A[i]} − ${B[i]} − borrow ${borrow} is negative, so borrow 2  →  write ${d}, borrow 1 from the left`
+      : `Column ${n-i}: ${A[i]} − ${B[i]} − borrow ${borrow} = ${d}  →  write ${d}`;
+    steps.push({col:i, digit:d, cout:bout, text});
+    borrow = bout;
+  }
+  const result = steps.map(x=>x.digit).reverse().join('').replace(/^0+(?=.)/,'');
+  return {n, A, B, steps, result, kind:'sub', opSymbol:'−'};
+}
+
+function drawColumnViz(vizId, st, idx){
+  const {n,A,B,steps,kind,opSymbol} = st;
+  const resRow = Array(n).fill('?');
+  const carryRow = Array(n).fill('');
+  const activeCol = idx < steps.length ? steps[idx].col : -1;
+  for(let k=0;k<idx;k++){
+    const s = steps[k];
+    resRow[s.col] = s.digit;
+    if(s.col-1 >= 0 && s.cout) carryRow[s.col-1] = 1;
+  }
+  const cell = (txt, cls) => `<td class="${cls||''}">${txt}</td>`;
+  const actCls = i => (i===activeCol ? 'active' : '');
+  const label = kind==='add' ? 'carry' : 'borrow';
+  let html = '<table class="col-table">';
+  html += `<tr class="carry-row"><th>${label}</th>` + carryRow.map((v,i)=>cell(v,'carry-cell')).join('') + '</tr>';
+  html += '<tr><th>A</th>' + A.map((v,i)=>cell(v,actCls(i))).join('') + '</tr>';
+  html += `<tr><th>${opSymbol}</th>` + B.map((v,i)=>cell(v,actCls(i))).join('') + '</tr>';
+  html += '<tr class="result-row"><th>=</th>' + resRow.map((v,i)=>cell(v,actCls(i))).join('') + '</tr>';
+  html += '</table>';
+  document.getElementById(vizId).innerHTML = html;
+}
+
+function startArith(kind){
+  const pref = kind==='add' ? 'add' : 'sub';
+  const aStr = document.getElementById(pref+'-a').value.trim();
+  const bStr = document.getElementById(pref+'-b').value.trim();
+  const log = document.getElementById(pref+'-log');
+  if(!isValidInBase(aStr,2) || !isValidInBase(bStr,2)){
+    log.textContent = 'Please type numbers using only 0 and 1.';
+    arithState[kind] = {st:null, idx:0};
+    return;
+  }
+  if(kind==='sub' && parseInt(aStr,2) < parseInt(bStr,2)){
+    log.textContent = 'For this lesson, A must be bigger than or equal to B.';
+    arithState[kind] = {st:null, idx:0};
+    return;
+  }
+  const st = kind==='add' ? computeAddSteps(aStr,bStr) : computeSubSteps(aStr,bStr);
+  arithState[kind] = {st, idx:0};
+  drawColumnViz(pref+'-viz', st, 0);
+  log.textContent = 'Press "Next Column →" to start from the rightmost column.';
+}
+
+function stepArith(kind){
+  const pref = kind==='add' ? 'add' : 'sub';
+  if(!arithState[kind].st){ startArith(kind); if(!arithState[kind].st) return; }
+  const s = arithState[kind];
+  if(s.idx < s.st.steps.length) s.idx++;
+  drawColumnViz(pref+'-viz', s.st, s.idx);
+  const lines = s.st.steps.slice(0, s.idx).map(x=>x.text);
+  let out = lines.join('\n');
+  if(s.idx === s.st.steps.length){
+    out += `\n\nAnswer: ${s.st.result} (base 2)`;
+  }
+  document.getElementById(pref+'-log').textContent = out;
+}
+
+function resetArith(kind){
+  const pref = kind==='add' ? 'add' : 'sub';
+  arithState[kind] = {st:null, idx:0};
+  document.getElementById(pref+'-viz').innerHTML = '';
+  document.getElementById(pref+'-log').textContent = '';
+}
+
+function initSlide6(){
+  // Worked Contoh: 1011 + 110
+  const ex = computeAddSteps('1011','110');
+  document.getElementById('worked-6').textContent =
+    ex.steps.slice().reverse().map(x=>x.text).join('\n') + `\n\nAnswer: ${ex.result} (base 2)`;
+  document.getElementById('add-start').addEventListener('click', ()=>startArith('add'));
+  document.getElementById('add-next').addEventListener('click', ()=>stepArith('add'));
+  document.getElementById('add-reset').addEventListener('click', ()=>resetArith('add'));
+}
+
+function initSlide7(){
+  // Worked Contoh: 1101 - 111
+  const ex = computeSubSteps('1101','111');
+  document.getElementById('worked-7').textContent =
+    ex.steps.slice().reverse().map(x=>x.text).join('\n') + `\n\nAnswer: ${ex.result} (base 2)`;
+  document.getElementById('sub-start').addEventListener('click', ()=>startArith('sub'));
+  document.getElementById('sub-next').addEventListener('click', ()=>stepArith('sub'));
+  document.getElementById('sub-reset').addEventListener('click', ()=>resetArith('sub'));
 }

@@ -94,3 +94,14 @@ label{font-size:0.88rem;color:var(--text-secondary);display:flex;flex-direction:
   .slide-row{grid-template-columns:1fr;}
   .slide-content{padding:1.2rem;}
 }
+
+/* ===== Slide 6-7: column addition / subtraction ===== */
+.worked-example{white-space:pre-wrap;}
+.column-viz{display:flex;justify-content:center;min-height:150px;}
+.col-table{border-collapse:collapse;font-family:"Share Tech Mono",monospace;}
+.col-table th{color:var(--primary-color);padding:0.35rem 0.6rem;text-align:right;font-size:0.85rem;font-weight:600;}
+.col-table td{width:42px;height:38px;text-align:center;border:1px solid var(--glass-border);
+  background:var(--bg-tertiary);font-size:1.05rem;color:var(--text-primary);}
+.col-table td.carry-cell{background:transparent;border-color:transparent;color:var(--accent-light);font-size:0.9rem;}
+.col-table td.active{background:rgba(74,144,226,0.35);border-color:var(--primary-color);}
+.col-table tr.result-row td{color:var(--success-color);border-top:2px solid var(--success-color);}

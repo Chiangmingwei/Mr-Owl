@@ -127,8 +127,70 @@
 
     <!-- Placeholder slides 5-7 -->
     <section class="slide" id="slide-5"><div class="slide-content"><h2 class="slide-heading" style="text-align:center;">🔄 Slide 5: Base A ↔ Base B (Coming Next)</h2></div></section>
-    <section class="slide" id="slide-6"><div class="slide-content"><h2 class="slide-heading" style="text-align:center;">➕ Slide 6: Addition in Base 2 (Coming Next)</h2></div></section>
-    <section class="slide" id="slide-7"><div class="slide-content"><h2 class="slide-heading" style="text-align:center;">➖ Slide 7: Subtraction in Base 2 (Coming Next)</h2></div></section>
+    <section class="slide" id="slide-6">
+      <div class="slide-content">
+        <h2 class="slide-heading">➕ Addition in Base 2</h2>
+        <div class="slide-row">
+          <div class="slide-col">
+            <p class="slide-text">Only four rules to remember. Base 2 only uses 0 and 1, so 1 + 1 is already "full" and must carry.</p>
+            <table class="place-table">
+              <tr><th>A</th><th>B</th><th>Result</th></tr>
+              <tr><td>0</td><td>0</td><td>0</td></tr>
+              <tr><td>0</td><td>1</td><td>1</td></tr>
+              <tr><td>1</td><td>0</td><td>1</td></tr>
+              <tr><td>1</td><td>1</td><td>10 (write 0, carry 1)</td></tr>
+            </table>
+            <p class="slide-text small-text"><strong>Odometer tie-in:</strong> when a plate passes 1 it resets to 0 and pushes the plate on its left forward by 1. That push is the carry.</p>
+            <p class="slide-text small-text"><strong>Contoh:</strong> 1011₂ + 110₂</p>
+            <div class="worked-example" id="worked-6"></div>
+          </div>
+          <div class="slide-col">
+            <h3 class="mini-heading">Step Through It Yourself</h3>
+            <label>Number A (base 2): <input type="text" id="add-a" class="num-input" placeholder="e.g. 1011"></label>
+            <label>Number B (base 2): <input type="text" id="add-b" class="num-input" placeholder="e.g. 110"></label>
+            <div class="odo-controls">
+              <button class="animation-btn" id="add-start">Start</button>
+              <button class="animation-btn" id="add-next">Next Column →</button>
+              <button class="animation-btn" id="add-reset">↻ Reset</button>
+            </div>
+            <div class="column-viz" id="add-viz"></div>
+            <div class="division-ladder" id="add-log"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="slide" id="slide-7">
+      <div class="slide-content">
+        <h2 class="slide-heading">➖ Subtraction in Base 2</h2>
+        <div class="slide-row">
+          <div class="slide-col">
+            <p class="slide-text">Four rules. The only tricky case is 0 − 1: we must borrow 1 from the column on the left, which is worth 2 in base 2 (10₂ − 1 = 1).</p>
+            <table class="place-table">
+              <tr><th>A</th><th>B</th><th>Result</th></tr>
+              <tr><td>0</td><td>0</td><td>0</td></tr>
+              <tr><td>1</td><td>0</td><td>1</td></tr>
+              <tr><td>1</td><td>1</td><td>0</td></tr>
+              <tr><td>0</td><td>1</td><td>1 (borrow 1 from the left)</td></tr>
+            </table>
+            <p class="slide-text small-text"><strong>Odometer tie-in:</strong> borrowing is the odometer running backwards. One plate steps back by 1, and the plate on the right gains 2.</p>
+            <p class="slide-text small-text"><strong>Contoh:</strong> 1101₂ − 111₂</p>
+            <div class="worked-example" id="worked-7"></div>
+          </div>
+          <div class="slide-col">
+            <h3 class="mini-heading">Step Through It Yourself</h3>
+            <label>Number A (base 2, must be bigger): <input type="text" id="sub-a" class="num-input" placeholder="e.g. 1101"></label>
+            <label>Number B (base 2): <input type="text" id="sub-b" class="num-input" placeholder="e.g. 111"></label>
+            <div class="odo-controls">
+              <button class="animation-btn" id="sub-start">Start</button>
+              <button class="animation-btn" id="sub-next">Next Column →</button>
+              <button class="animation-btn" id="sub-reset">↻ Reset</button>
+            </div>
+            <div class="column-viz" id="sub-viz"></div>
+            <div class="division-ladder" id="sub-log"></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- ===== SLIDE 8: Quiz ===== -->
     <section class="slide" id="slide-8">
@@ -138,7 +200,7 @@
           <div class="slide-col">
             <h3 class="mini-heading">Choose Topic:</h3>
             <select id="quiz-topic" class="num-input">
-              <option value="toBase10">Convert to Base 10</option>
+              <option value="toBase10">Convert to Base 10</option><option value="addBase2">Addition in Base 2</option><option value="subBase2">Subtraction in Base 2</option>
               <option value="fromBase10">Convert from Base 10</option>
             </select>
             <button class="animation-btn" id="new-question-btn">🎲 New Question</button>
