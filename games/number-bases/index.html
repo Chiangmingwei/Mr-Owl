@@ -12,33 +12,40 @@
 <body>
 <div class="slide-container">
   <header class="slide-header">
-    <div class="header-left"><h1 class="slide-title">Number Bases: Place Value & Conversion</h1></div>
+    <div class="header-left"><h1 class="slide-title" data-i18n="mainTitle">Number Bases: Place Value & Conversion</h1></div>
     <div class="header-right">
+      <div class="lang-selector">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="bm">BM</button>
+        <button class="lang-btn" data-lang="cn">中文</button>
+      </div>
       <div class="progress-info"><span id="current-slide">1</span> / 8</div>
     </div>
   </header>
 
   <main class="slides-wrapper">
 
-    <!-- ===== SLIDE 1: What is a Number Base? ===== -->
+    <!-- SLIDE 1 -->
     <section class="slide active" id="slide-1">
       <div class="slide-content">
-        <h2 class="slide-heading">🔢 What is a Number Base?</h2>
+        <h2 class="slide-heading" data-i18n="s1Title">What is a Number Base?</h2>
         <div class="slide-row">
           <div class="slide-col">
-            <p class="slide-text">Every day you use <strong>Base 10</strong> (decimal) — 10 digits: 0-9. When a column reaches 10, it "rolls over" and carries 1 to the next column.</p>
-            <p class="slide-text">A number in <strong>any base b</strong> only uses digits from 0 to (b−1). Example: Base 5 only uses 0,1,2,3,4.</p>
-            <p class="slide-text">Think of it like a car's <strong>mileage odometer</strong> — each wheel/plate can only show digits 0 to (base−1). Once a plate completes a full cycle, it pushes the next plate by 1.</p>
-            <button class="toggle-btn" id="toggle-odo-1">🎮 Try the Odometer Model</button>
+            <p class="slide-text" data-i18n="s1P1"></p>
+            <p class="slide-text" data-i18n="s1P2"></p>
+            <p class="slide-text" data-i18n="s1P3"></p>
+            <button class="toggle-btn" id="toggle-odo-1" data-i18n="s1Toggle"></button>
           </div>
           <div class="slide-col" id="odo-panel-1" style="display:none;">
             <div class="odo-controls">
-              <label>Base: <select id="odo-base-1">
-                <option value="2">2</option><option value="5">5</option>
-                <option value="8" selected>8</option><option value="10">10</option>
-              </select></label>
-              <button id="odo-inc-1" class="animation-btn">+1</button>
-              <button id="odo-reset-1" class="animation-btn">↻ Reset</button>
+              <label><span data-i18n="s1BaseLbl"></span>
+                <select id="odo-base-1" class="num-input">
+                  <option value="2">2</option><option value="5">5</option>
+                  <option value="8" selected>8</option><option value="10">10</option>
+                </select>
+              </label>
+              <button id="odo-inc-1" class="animation-btn" data-i18n="s1Inc"></button>
+              <button id="odo-reset-1" class="animation-btn" data-i18n="s1Reset"></button>
             </div>
             <div class="odometer-display" id="odometer-1"></div>
             <p class="odo-readout" id="odo-readout-1"></p>
@@ -47,28 +54,35 @@
       </div>
     </section>
 
-    <!-- ===== SLIDE 2: Numbers in Base 2, 5, 8 ===== -->
+    <!-- SLIDE 2 -->
     <section class="slide" id="slide-2">
       <div class="slide-content">
-        <h2 class="slide-heading">📊 Numbers in Base 2, 5 and 8 — Place Values</h2>
+        <h2 class="slide-heading" data-i18n="s2Title"></h2>
         <div class="slide-row">
           <div class="slide-col">
-            <p class="slide-text">In base <em>b</em>, each column's place value is a power of <em>b</em>, just like base 10 uses 100s, 10s, 1s.</p>
+            <p class="slide-text" data-i18n="s2P1"></p>
+            <p class="slide-text small-text" data-i18n="s2Ex"></p>
             <table class="place-table" id="place-table-2"></table>
-            <p class="slide-text small-text">Example (Contoh): <span class="mono">101101₂</span> means:</p>
             <p class="mono expansion-text" id="expansion-example-2"></p>
           </div>
           <div class="slide-col">
-            <label>Try your own: <input type="text" id="custom-digits-2" placeholder="e.g. 101101" class="num-input"></label>
-            <label>Base: <select id="custom-base-2">
-              <option value="2" selected>2</option><option value="5">5</option><option value="8">8</option>
-            </select></label>
-            <button class="animation-btn" id="show-table-btn-2">Show Place Values</button>
-            <button class="toggle-btn" id="toggle-odo-2">🎮 Try the Odometer Model</button>
+            <h3 class="mini-heading" data-i18n="s2Try"></h3>
+            <label><span data-i18n="s2Digits"></span>
+              <input type="text" id="custom-digits-2" class="num-input" placeholder="101101">
+            </label>
+            <label><span data-i18n="s2BaseLbl"></span>
+              <select id="custom-base-2" class="num-input">
+                <option value="2" selected>2</option><option value="3">3</option><option value="4">4</option>
+                <option value="5">5</option><option value="6">6</option><option value="7">7</option>
+                <option value="8">8</option><option value="9">9</option>
+              </select>
+            </label>
+            <button class="animation-btn" id="show-table-btn-2" data-i18n="s2Show"></button>
+            <button class="toggle-btn" id="toggle-odo-2" data-i18n="s2Toggle"></button>
             <div id="odo-panel-2" style="display:none;">
               <div class="odo-controls">
-                <button id="odo-inc-2" class="animation-btn">+1</button>
-                <button id="odo-reset-2" class="animation-btn">↻ Reset</button>
+                <button id="odo-inc-2" class="animation-btn" data-i18n="s2Inc"></button>
+                <button id="odo-reset-2" class="animation-btn" data-i18n="s2Reset"></button>
               </div>
               <div class="odometer-display" id="odometer-2"></div>
             </div>
@@ -77,81 +91,135 @@
       </div>
     </section>
 
-    <!-- ===== SLIDE 3: Convert Base N -> Base 10 ===== -->
+    <!-- SLIDE 3 -->
     <section class="slide" id="slide-3">
       <div class="slide-content">
-        <h2 class="slide-heading">➡️ Converting Base <em>N</em> to Base 10 (Expansion Method)</h2>
+        <h2 class="slide-heading" data-i18n="s3Title"></h2>
         <div class="slide-row">
           <div class="slide-col">
-            <p class="slide-text">Multiply each digit by its place value, then add everything up.</p>
-            <p class="slide-text small-text"><strong>Contoh:</strong> Convert 1101₂ to base 10</p>
+            <p class="slide-text" data-i18n="s3P"></p>
+            <p class="slide-text small-text" data-i18n="s3Ex1"></p>
             <div class="worked-example" id="worked-3a"></div>
-            <p class="slide-text small-text"><strong>Contoh:</strong> Convert 352₈ to base 10</p>
+            <p class="slide-text small-text" data-i18n="s3Ex2"></p>
             <div class="worked-example" id="worked-3b"></div>
           </div>
           <div class="slide-col">
-            <h3 class="mini-heading">Try It Yourself</h3>
-            <label>Digits: <input type="text" id="input-digits-3" placeholder="e.g. 352" class="num-input"></label>
-            <label>From base: <select id="input-base-3">
-              <option value="2">2</option><option value="5">5</option><option value="8" selected>8</option>
-            </select></label>
-            <button class="animation-btn" id="convert-btn-3">Convert to Base 10</button>
+            <h3 class="mini-heading" data-i18n="s3Try"></h3>
+            <label><span data-i18n="s3Digits"></span>
+              <input type="text" id="input-digits-3" class="num-input" placeholder="352">
+            </label>
+            <label><span data-i18n="s3FromLbl"></span>
+              <select id="input-base-3" class="num-input">
+                <option value="2">2</option><option value="3">3</option><option value="4">4</option>
+                <option value="5">5</option><option value="6">6</option><option value="7">7</option>
+                <option value="8" selected>8</option><option value="9">9</option>
+              </select>
+            </label>
+            <button class="animation-btn" id="convert-btn-3" data-i18n="s3Btn"></button>
             <div class="result-box" id="result-3"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===== SLIDE 4: Convert Base 10 -> Base N ===== -->
+    <!-- SLIDE 4 -->
     <section class="slide" id="slide-4">
       <div class="slide-content">
-        <h2 class="slide-heading">⬅️ Converting Base 10 to Base <em>N</em> (Repeated Division)</h2>
+        <h2 class="slide-heading" data-i18n="s4Title"></h2>
         <div class="slide-row">
           <div class="slide-col">
-            <p class="slide-text">Divide repeatedly by the target base, keep the remainders, then read remainders bottom-to-top.</p>
-            <p class="slide-text small-text"><strong>Contoh:</strong> Convert 45 (base 10) to base 2</p>
+            <p class="slide-text" data-i18n="s4P"></p>
+            <p class="slide-text small-text" data-i18n="s4Ex"></p>
             <div class="division-ladder" id="ladder-4a"></div>
           </div>
           <div class="slide-col">
-            <h3 class="mini-heading">Try It Yourself</h3>
-            <label>Number (base 10): <input type="number" id="input-num-4" placeholder="e.g. 45" class="num-input"></label>
-            <label>To base: <select id="input-base-4">
-              <option value="2" selected>2</option><option value="5">5</option><option value="8">8</option>
-            </select></label>
-            <button class="animation-btn" id="convert-btn-4">Convert</button>
+            <h3 class="mini-heading" data-i18n="s3Try"></h3>
+            <label><span data-i18n="s4NumLbl"></span>
+              <input type="number" id="input-num-4" class="num-input" placeholder="45">
+            </label>
+            <label><span data-i18n="s4ToLbl"></span>
+              <select id="input-base-4" class="num-input">
+                <option value="2" selected>2</option><option value="3">3</option><option value="4">4</option>
+                <option value="5">5</option><option value="6">6</option><option value="7">7</option>
+                <option value="8">8</option><option value="9">9</option>
+              </select>
+            </label>
+            <button class="animation-btn" id="convert-btn-4" data-i18n="s4Btn"></button>
             <div class="division-ladder" id="ladder-4b"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Placeholder slides 5-7 -->
-    <section class="slide" id="slide-5"><div class="slide-content"><h2 class="slide-heading" style="text-align:center;">🔄 Slide 5: Base A ↔ Base B (Coming Next)</h2></div></section>
-    <section class="slide" id="slide-6">
+    <!-- SLIDE 5 -->
+    <section class="slide" id="slide-5">
       <div class="slide-content">
-        <h2 class="slide-heading">➕ Addition in Base 2</h2>
+        <h2 class="slide-heading" data-i18n="s5Title"></h2>
         <div class="slide-row">
           <div class="slide-col">
-            <p class="slide-text">Only four rules to remember. Base 2 only uses 0 and 1, so 1 + 1 is already "full" and must carry.</p>
+            <p class="slide-text" data-i18n="s5P"></p>
+            <div class="division-ladder" data-i18n="s5Flow"></div>
+            <p class="slide-text small-text" data-i18n="s5Ex"></p>
+            <div class="worked-example" id="worked-5"></div>
+          </div>
+          <div class="slide-col">
+            <h3 class="mini-heading" data-i18n="s5Try"></h3>
+            <label><span data-i18n="s5DigitsLbl"></span>
+              <input type="text" id="chg-digits" class="num-input" placeholder="1011">
+            </label>
+            <label><span data-i18n="s5FromLbl"></span>
+              <select id="chg-from" class="num-input">
+                <option value="2" selected>2</option><option value="3">3</option><option value="4">4</option>
+                <option value="5">5</option><option value="6">6</option><option value="7">7</option>
+                <option value="8">8</option><option value="9">9</option><option value="10">10</option>
+              </select>
+            </label>
+            <label><span data-i18n="s5ToLbl"></span>
+              <select id="chg-to" class="num-input">
+                <option value="2">2</option><option value="3">3</option><option value="4">4</option>
+                <option value="5">5</option><option value="6">6</option><option value="7">7</option>
+                <option value="8" selected>8</option><option value="9">9</option><option value="10">10</option>
+              </select>
+            </label>
+            <button class="animation-btn" id="chg-convert" data-i18n="s5Btn"></button>
+            <div class="worked-example" id="chg-expansion"></div>
+            <div class="division-ladder" id="chg-division"></div>
+            <div class="result-box" id="chg-result"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6 -->
+    <section class="slide" id="slide-6">
+      <div class="slide-content">
+        <h2 class="slide-heading" data-i18n="s6Title"></h2>
+        <div class="slide-row">
+          <div class="slide-col">
+            <p class="slide-text" data-i18n="s6P"></p>
             <table class="place-table">
-              <tr><th>A</th><th>B</th><th>Result</th></tr>
+              <tr><th data-i18n="tblA"></th><th data-i18n="tblB"></th><th data-i18n="tblResult"></th></tr>
               <tr><td>0</td><td>0</td><td>0</td></tr>
               <tr><td>0</td><td>1</td><td>1</td></tr>
               <tr><td>1</td><td>0</td><td>1</td></tr>
-              <tr><td>1</td><td>1</td><td>10 (write 0, carry 1)</td></tr>
+              <tr><td>1</td><td>1</td><td data-i18n="r4Carry"></td></tr>
             </table>
-            <p class="slide-text small-text"><strong>Odometer tie-in:</strong> when a plate passes 1 it resets to 0 and pushes the plate on its left forward by 1. That push is the carry.</p>
-            <p class="slide-text small-text"><strong>Contoh:</strong> 1011₂ + 110₂</p>
+            <p class="slide-text small-text" data-i18n-html="s6Odo"></p>
+            <p class="slide-text small-text" data-i18n="s6Contoh"></p>
             <div class="worked-example" id="worked-6"></div>
           </div>
           <div class="slide-col">
-            <h3 class="mini-heading">Step Through It Yourself</h3>
-            <label>Number A (base 2): <input type="text" id="add-a" class="num-input" placeholder="e.g. 1011"></label>
-            <label>Number B (base 2): <input type="text" id="add-b" class="num-input" placeholder="e.g. 110"></label>
+            <h3 class="mini-heading" data-i18n="s6Step"></h3>
+            <label><span data-i18n="numALbl6"></span>
+              <input type="text" id="add-a" class="num-input" placeholder="1011">
+            </label>
+            <label><span data-i18n="numBLbl6"></span>
+              <input type="text" id="add-b" class="num-input" placeholder="110">
+            </label>
             <div class="odo-controls">
-              <button class="animation-btn" id="add-start">Start</button>
-              <button class="animation-btn" id="add-next">Next Column →</button>
-              <button class="animation-btn" id="add-reset">↻ Reset</button>
+              <button class="animation-btn" id="add-start" data-i18n="btnStart"></button>
+              <button class="animation-btn" id="add-next" data-i18n="btnNext"></button>
+              <button class="animation-btn" id="add-reset" data-i18n="btnReset"></button>
             </div>
             <div class="column-viz" id="add-viz"></div>
             <div class="division-ladder" id="add-log"></div>
@@ -159,31 +227,37 @@
         </div>
       </div>
     </section>
+
+    <!-- SLIDE 7 -->
     <section class="slide" id="slide-7">
       <div class="slide-content">
-        <h2 class="slide-heading">➖ Subtraction in Base 2</h2>
+        <h2 class="slide-heading" data-i18n="s7Title"></h2>
         <div class="slide-row">
           <div class="slide-col">
-            <p class="slide-text">Four rules. The only tricky case is 0 − 1: we must borrow 1 from the column on the left, which is worth 2 in base 2 (10₂ − 1 = 1).</p>
+            <p class="slide-text" data-i18n="s7P"></p>
             <table class="place-table">
-              <tr><th>A</th><th>B</th><th>Result</th></tr>
+              <tr><th data-i18n="tblA"></th><th data-i18n="tblB"></th><th data-i18n="tblResult"></th></tr>
               <tr><td>0</td><td>0</td><td>0</td></tr>
               <tr><td>1</td><td>0</td><td>1</td></tr>
               <tr><td>1</td><td>1</td><td>0</td></tr>
-              <tr><td>0</td><td>1</td><td>1 (borrow 1 from the left)</td></tr>
+              <tr><td>0</td><td>1</td><td data-i18n="r4Borrow"></td></tr>
             </table>
-            <p class="slide-text small-text"><strong>Odometer tie-in:</strong> borrowing is the odometer running backwards. One plate steps back by 1, and the plate on the right gains 2.</p>
-            <p class="slide-text small-text"><strong>Contoh:</strong> 1101₂ − 111₂</p>
+            <p class="slide-text small-text" data-i18n-html="s7Odo"></p>
+            <p class="slide-text small-text" data-i18n="s7Contoh"></p>
             <div class="worked-example" id="worked-7"></div>
           </div>
           <div class="slide-col">
-            <h3 class="mini-heading">Step Through It Yourself</h3>
-            <label>Number A (base 2, must be bigger): <input type="text" id="sub-a" class="num-input" placeholder="e.g. 1101"></label>
-            <label>Number B (base 2): <input type="text" id="sub-b" class="num-input" placeholder="e.g. 111"></label>
+            <h3 class="mini-heading" data-i18n="s7Step"></h3>
+            <label><span data-i18n="numALbl7"></span>
+              <input type="text" id="sub-a" class="num-input" placeholder="1101">
+            </label>
+            <label><span data-i18n="numBLbl7"></span>
+              <input type="text" id="sub-b" class="num-input" placeholder="111">
+            </label>
             <div class="odo-controls">
-              <button class="animation-btn" id="sub-start">Start</button>
-              <button class="animation-btn" id="sub-next">Next Column →</button>
-              <button class="animation-btn" id="sub-reset">↻ Reset</button>
+              <button class="animation-btn" id="sub-start" data-i18n="btnStart"></button>
+              <button class="animation-btn" id="sub-next" data-i18n="btnNext"></button>
+              <button class="animation-btn" id="sub-reset" data-i18n="btnReset"></button>
             </div>
             <div class="column-viz" id="sub-viz"></div>
             <div class="division-ladder" id="sub-log"></div>
@@ -192,25 +266,28 @@
       </div>
     </section>
 
-    <!-- ===== SLIDE 8: Quiz ===== -->
+    <!-- SLIDE 8 -->
     <section class="slide" id="slide-8">
       <div class="slide-content">
-        <h2 class="slide-heading">❓ Practice Quiz (Infinite Questions)</h2>
+        <h2 class="slide-heading" data-i18n="s8Title"></h2>
         <div class="slide-row">
           <div class="slide-col">
-            <h3 class="mini-heading">Choose Topic:</h3>
+            <h3 class="mini-heading" data-i18n="s8Topic"></h3>
             <select id="quiz-topic" class="num-input">
-              <option value="toBase10">Convert to Base 10</option><option value="addBase2">Addition in Base 2</option><option value="subBase2">Subtraction in Base 2</option>
-              <option value="fromBase10">Convert from Base 10</option>
+              <option value="toBase10" data-i18n="optToBase10"></option>
+              <option value="fromBase10" data-i18n="optFromBase10"></option>
+              <option value="addBase2" data-i18n="optAdd"></option>
+              <option value="subBase2" data-i18n="optSub"></option>
+              <option value="anyBase" data-i18n="optAny"></option>
             </select>
-            <button class="animation-btn" id="new-question-btn">🎲 New Question</button>
+            <button class="animation-btn" id="new-question-btn" data-i18n="btnNewQ"></button>
           </div>
           <div class="slide-col">
-            <div class="quiz-box" id="quiz-question-box">Click "New Question" to begin!</div>
-            <input type="text" id="quiz-answer-input" class="num-input" placeholder="Your answer">
-            <button class="animation-btn" id="check-answer-btn">Check Answer</button>
+            <div class="quiz-box" id="quiz-question-box"></div>
+            <input type="text" id="quiz-answer-input" class="num-input" data-i18n-ph="placeholderAns" placeholder="Your answer">
+            <button class="animation-btn" id="check-answer-btn" data-i18n="btnCheck"></button>
             <div class="quiz-feedback" id="quiz-feedback"></div>
-            <p class="score-text" id="score-text">Score: 0 / 0</p>
+            <p class="score-text" id="score-text"></p>
           </div>
         </div>
       </div>
@@ -219,8 +296,8 @@
   </main>
 
   <footer class="slide-navigation">
-    <button class="nav-btn prev-btn" id="prev-btn">← Previous</button>
-    <button class="nav-btn next-btn" id="next-btn">Next →</button>
+    <button class="nav-btn prev-btn" id="prev-btn" data-i18n="prevBtn"></button>
+    <button class="nav-btn next-btn" id="next-btn" data-i18n="nextBtn"></button>
   </footer>
 </div>
 <script src="game.js"></script>
