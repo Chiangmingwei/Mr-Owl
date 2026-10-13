@@ -54,6 +54,8 @@ const translations = {
     game1Desc: "Hitung panjang sisi atau sudut segi tiga bersudut tegak (SOH CAH TOA) sebelum dinding bergerak melanggar anda!",
     trigoSlideTitle: "Trigonometri: Dari Sejarah ke Fungsi",
     trigoSlideDesc: "Jelajahi 7 slide interaktif yang meneroka sejarah trigonometri, dari matematik Babylon hingga fungsi modern!",
+    numberBasesTitle: "Nombor Asas: Nilai Tempat & Penukaran",
+    numberBasesDesc: "Pelajari asas 2, 5 dan 8 dengan model odometer, tukar antara asas, dan uji diri dengan soalan latihan tanpa had.",
     game4Title: "Fizik: Kucing vs Anjing (Pertempuran Projektil)",
     game4Desc: "Selesaikan pengiraan gerakan projektil Fizik SPM (g=9.8 ms⁻²) untuk melancarkan tembakan tepat!"
   },
@@ -101,6 +103,8 @@ const translations = {
     game1Desc: "Calculate missing triangle sides or angles using SOH CAH TOA before the moving wall reaches you!",
     trigoSlideTitle: "Trigonometry: From History to Function",
     trigoSlideDesc: "Journey through 7 interactive slides exploring the history of trigonometry, from Babylonian mathematics to modern functions!",
+    numberBasesTitle: "Number Bases: Place Value & Conversion",
+    numberBasesDesc: "Learn bases 2, 5 and 8 with an odometer model, convert between bases, and test yourself with unlimited practice questions.",
     game4Title: "Physics: Cat vs Dog (Projectile Battle)",
     game4Desc: "Solve SPM Physics projectile motion calculations (g=9.8 ms⁻²) to launch accurate trajectory shots!"
   },
@@ -148,6 +152,8 @@ const translations = {
     game1Desc: "在移动的墙壁靠近前，运用 SOH CAH TOA 计算直角三角形缺少的边长或角度！",
     trigoSlideTitle: "三角函数：从历史到函数",
     trigoSlideDesc: "通过7个交互式幻灯片探索三角函数的历史，从巴比伦数学到现代函数！",
+    numberBasesTitle: "进制：位值与转换",
+    numberBasesDesc: "用里程表模型学习2、5、8进制，练习进制之间的转换，并通过无限练习题测试自己。",
     game4Title: "物理：猫狗大作战 (平抛与斜抛运动)",
     game4Desc: "解答 SPM 物理斜抛运动公式 (g=9.8 ms⁻²)，发射精准炮弹击败对手！"
   }
